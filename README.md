@@ -49,6 +49,13 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - ```tar xzvf boost_1_84_0.tar.gz```
  - ```git clone https://github.com/fritzing/fritzing-app.git```
  - ```git clone https://github.com/fritzing/fritzing-parts```
+ - change compile script (phoenix.pro):
+   - allow for later versions of qt
+ - change boost detect script (will only accept up to 81)
+   - ```nano ./fritzing-app/pri/boostdetect.pri```
+   - find 81
+   - change to 84
+ - 
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
