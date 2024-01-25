@@ -64,7 +64,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```nano ./fritzing-app/pri/boostdetect.pri```
    - find 81
    - change to 84
- - 
+ - `gmake`
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
