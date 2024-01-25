@@ -12,10 +12,11 @@ There's another page called linux notes: https://github.com/fritzing/fritzing-ap
 
 All that documentation is inconclusive, inconsistent and outdated.
 
-So I decided to try this with a newer release of Ubuntu, here we go. 
+So I decided to try this with a newer release of Ubuntu, here we go.
 
 # How ?
 ## Get build environment up and running
+Don't choose 22.04 LTS, because qt6 is 6.2.4. Fritzing 1.0.2 depends on qt 6.5.2
 - get Ubuntu 22.04 LTS
 - create vm
   - 32 GB disk space
@@ -37,6 +38,6 @@ So I decided to try this with a newer release of Ubuntu, here we go.
   - get boost math lib from [boost.org:](https://www.boost.org/users/download/)
     - ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
     - ```tar xzvf boost_1_84_0.tar.gz```
-  - set path: ```export PATH=/usr/lib/x86_64-linux-gnu/qt5/bin:$PATH```
+  - set path: ```export PATH=/usr/lib/x86_64-linux-gnu/qt6/bin:$PATH```
   - clone repo: ```git clone https://github.com/fritzing/fritzing-app.git```
   - 
