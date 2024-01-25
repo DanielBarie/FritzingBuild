@@ -16,9 +16,34 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 
 # How ?
 ## Get build environment up and running
+Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us)
+- get Ubuntu 22.04 LTS
+- create vm (qt build will take approx 7 minutes)
+  - 128 GB disk space (SSD)
+  - 262144 MB RAM (64GB will be ok, too)
+  - 64 cores (if you have some to spare, hand them over...)
+  - network
+- install Ubuntu
+  - minimal install
+- post-install:
+  - be root (or pre-pend sudo to each of the commands below) 
+  - ```apt install openssh-server mc qemu-guest-agent```
+  - ```apt-get update```
+  - ```apt-get upgrade```
+  - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
+- prepare for build, assuming you're happy to build below your user home dir
+ - ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev```
+ - ```apt-get install libdrm-dev libgles2-mesa-dev```
+ - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
+ - untar the sources: `tar xf...` takes a while in silence...
+ - go to directory
+ - ```./configure```
+ - ```cmake --install .```will install to /usr/local/Qt-6.6.1
+
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
-Ubuntu 23.10.01
+Ubuntu 23.10.01  
+
 - get 23.10.01
 - create vm
  - 32 GB disk space
@@ -52,21 +77,7 @@ Ubuntu 23.10.01
    - ```export QT_SELECT=qt6```
 
 Don't choose 22.04 LTS, because qt6 is 6.2.4. Fritzing 1.0.2 depends on qt 6.5.2
-- get Ubuntu 22.04 LTS
-- create vm
-  - 32 GB disk space
-  - 16384 MB RAM
-  - 4 cores
-  - network
-- install Ubuntu
-  - minimal install
-- post-install:
-  - be root (or pre-pend sudo to each of the commands below) 
-  - ```apt install openssh-server mc```
-  - ```apt-get update```
-  - ```apt-get upgrade```
-  - ```apt-get install qemu-guest-agent```
-  - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
+
   - ```apt-get install qt6-base-dev qtchooser qt5-qmake qt6-base-dev-tools``` (because there's no qt5-default and qt5 is insufficient for building current versions of fritzing)
   - ```apt-get install libqt6serialport6-dev libqt6svg6-dev```
   - ```apt-get install libgit2-dev```
