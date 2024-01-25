@@ -16,6 +16,7 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 
 # How ?
 ## Get build environment up and running
+Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```
 Ubuntu 23.10.01
 - get 23.10.01
  
@@ -26,7 +27,7 @@ Ubuntu 23.10.01
   - network
 - install Ubuntu
   - standard install
-- post-install:
+- post-install, basic VM config:
   - be root (or pre-pend sudo to each of the commands below) 
   - ```apt install openssh-server mc```
   - ```apt-get update```
@@ -36,6 +37,9 @@ Ubuntu 23.10.01
   - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
   - ```apt-get install qt6-base-dev qtchooser qmake6 qt6-base-dev-tools```
   - ```sudo apt-get install libqt6serialport6-dev libqt6svg6-dev libgit2-dev```
+  - fix qt chooser bug: https://askubuntu.com/questions/1460242/ubuntu-22-04-with-qt6-qmake-could-not-find-a-qt-installation-of
+   - ```qtchooser -install qt6 $(which qmake6)```
+   - ```export QT_SELECT=qt6```
 
 Don't choose 22.04 LTS, because qt6 is 6.2.4. Fritzing 1.0.2 depends on qt 6.5.2
 - get Ubuntu 22.04 LTS
