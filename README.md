@@ -16,7 +16,8 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 
 # How ?
 ## Get build environment up and running
-Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```
+Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
+But since we're at it... 
 Ubuntu 23.10.01
 - get 23.10.01
  
@@ -34,6 +35,16 @@ Ubuntu 23.10.01
   - ```apt-get upgrade```
   - ```apt-get install qemu-guest-agent```
 - prepare for build, assuming you're happy to build below your user home dir
+ - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/
+ - untar the sources: `tar xf...` takes a while in silence...
+ - move to build dir (as described https://doc.qt.io/qt-6/linux-building.html)
+ - go to build directory, subdir for qt source
+ - ```./configure```
+ - ```cmake --build . --parallel```, those cores looking pretty busy...
+ - 
+
+
+   
   - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
   - ```apt-get install qt6-base-dev qtchooser qmake6 qt6-base-dev-tools```
   - ```sudo apt-get install libqt6serialport6-dev libqt6svg6-dev libgit2-dev```
