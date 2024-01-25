@@ -42,6 +42,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```cmake --build . --parallel```
    - ```cmake --install .```will install to /usr/local/Qt-6.6.1
  - ```apt-get install qtchooser```
+ - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
+ - ```export QT_SELECT=qt6```
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
