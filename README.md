@@ -34,6 +34,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 - prepare for build, assuming you're happy to build below your user home dir
  - ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev```
  - ```apt-get install libdrm-dev libgles2-mesa-dev```
+ - ```apt-get install pkg-config```
  - do qt build:
    - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
    - untar the sources: `tar xf...` takes a while in silence...
