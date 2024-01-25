@@ -34,11 +34,14 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 - prepare for build, assuming you're happy to build below your user home dir
  - ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev```
  - ```apt-get install libdrm-dev libgles2-mesa-dev```
- - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
- - untar the sources: `tar xf...` takes a while in silence...
- - go to directory
- - ```./configure```
- - ```cmake --install .```will install to /usr/local/Qt-6.6.1
+ - do qt build:
+   - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
+   - untar the sources: `tar xf...` takes a while in silence...
+   - go to directory
+   - ```./configure```
+   - ```cmake --build . --parallel```
+   - ```cmake --install .```will install to /usr/local/Qt-6.6.1
+ - ```apt-get install qtchooser```
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
