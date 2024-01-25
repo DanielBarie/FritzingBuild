@@ -22,8 +22,8 @@ Ubuntu 23.10.01
 - get 23.10.01
 - create vm
  - 32 GB disk space
- - 16384 MB RAM
- - 4 cores
+ - 262144 MB RAM (64 GB will be sufficient for building qt, usage rarely tops 32GB)
+ - 32 cores, the more, the merrier... but with 32 cores building qt proceeds at an ok speed with 100% load most of the time
  - network
 - install Ubuntu
  - standard install
