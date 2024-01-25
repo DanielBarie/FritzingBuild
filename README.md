@@ -16,6 +16,27 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 
 # How ?
 ## Get build environment up and running
+Ubuntu 23.10.01
+- get 23.10.01
+ 
+- create vm
+  - 32 GB disk space
+  - 16384 MB RAM
+  - 4 cores
+  - network
+- install Ubuntu
+  - standard install
+- post-install:
+  - be root (or pre-pend sudo to each of the commands below) 
+  - ```apt install openssh-server mc```
+  - ```apt-get update```
+  - ```apt-get upgrade```
+  - ```apt-get install qemu-guest-agent```
+- prepare for build, assuming you're happy to build below your user home dir
+  - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
+  - ```apt-get install qt6-base-dev qtchooser qmake6 qt6-base-dev-tools```
+  - ```sudo apt-get install libqt6serialport6-dev libqt6svg6-dev libgit2-dev```
+
 Don't choose 22.04 LTS, because qt6 is 6.2.4. Fritzing 1.0.2 depends on qt 6.5.2
 - get Ubuntu 22.04 LTS
 - create vm
@@ -33,7 +54,7 @@ Don't choose 22.04 LTS, because qt6 is 6.2.4. Fritzing 1.0.2 depends on qt 6.5.2
   - ```apt-get install qemu-guest-agent```
   - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
   - ```apt-get install qt6-base-dev qtchooser qt5-qmake qt6-base-dev-tools``` (because there's no qt5-default and qt5 is insufficient for building current versions of fritzing)
-  - ```sudo apt-get install libqt6serialport6-dev libqt6svg6-dev```
+  - ```apt-get install libqt6serialport6-dev libqt6svg6-dev```
   - ```apt-get install libgit2-dev```
   - get boost math lib from [boost.org:](https://www.boost.org/users/download/)
     - ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
