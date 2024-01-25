@@ -20,20 +20,19 @@ Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 i
 But since we're at it... 
 Ubuntu 23.10.01
 - get 23.10.01
- 
 - create vm
-  - 32 GB disk space
-  - 16384 MB RAM
-  - 4 cores
-  - network
+ - 32 GB disk space
+ - 16384 MB RAM
+ - 4 cores
+ - network
 - install Ubuntu
-  - standard install
+ - standard install
 - post-install, basic VM config:
-  - be root (or pre-pend sudo to each of the commands below) 
-  - ```apt install openssh-server mc```
-  - ```apt-get update```
-  - ```apt-get upgrade```
-  - ```apt-get install qemu-guest-agent```
+ - be root (or pre-pend sudo to each of the commands below) 
+ - ```apt install openssh-server mc```
+ - ```apt-get update```
+ - ```apt-get upgrade```
+ - ```apt-get install qemu-guest-agent```
 - prepare for build, assuming you're happy to build below your user home dir
  - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/
  - untar the sources: `tar xf...` takes a while in silence...
