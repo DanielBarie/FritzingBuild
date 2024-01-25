@@ -10,7 +10,9 @@ These do only refer to building from qt Studio, so you'll have to go through qt 
 
 There's another page called linux notes: https://github.com/fritzing/fritzing-app/wiki/1.3-Linux-notes
 
-So I decided to try this with a newer release of Ubuntu, here we go.
+All that documentation is inconclusive, inconsistent and outdated.
+
+So I decided to try this with a newer release of Ubuntu, here we go. 
 
 # How ?
 ## Get build environment up and running
@@ -29,8 +31,8 @@ So I decided to try this with a newer release of Ubuntu, here we go.
   - ```apt-get upgrade```
   - ```apt-get install qemu-guest-agent```
   - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
-  - ```apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools``` (because there's no qt5-default)
-  - ```apt-get install libqt5serialport5-dev libqt5svg5-dev```
+  - ```apt-get install qt6-base-dev qtchooser qt5-qmake qt6-base-dev-tools``` (because there's no qt5-default and qt5 is insufficient for building current versions of fritzing)
+  - ```sudo apt-get install libqt6serialport6-dev libqt6svg6-dev```
   - ```apt-get install libgit2-dev```
   - get boost math lib from [boost.org:](https://www.boost.org/users/download/)
     - ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
