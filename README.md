@@ -42,6 +42,13 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```./configure```
    - ```cmake --build . --parallel```
    - ```cmake --install .```will install to /usr/local/Qt-6.6.1
+ - do spiceng build
+   - get sources from https://ngspice.sourceforge.io/download.html
+   - unzip
+   - ```apt-get install libxaw7-dev```
+   - change to unzip dir
+   - ```./configure```
+   - ```make```
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  - ```export QT_SELECT=qt6```
