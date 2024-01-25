@@ -23,8 +23,10 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 - install Ubuntu
   - minimal install
 - post-install:
-  - ```apt install openssh-server```
+  - ```apt install openssh-server mc```
   - ```apt-get update```
   - ```apt-get upgrade```
-  - ```apt-get install unattended-upgrades```
   - ```apt-get install qemu-guest-agent```
+  - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
+  - ```apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools``` (because there's no qt5-default)
+  - ```apt-get install libqt5serialport5-dev libqt5svg5-dev```
