@@ -23,6 +23,7 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 - install Ubuntu
   - minimal install
 - post-install:
+  - be root (or pre-pend sudo to each of the commands below) 
   - ```apt install openssh-server mc```
   - ```apt-get update```
   - ```apt-get upgrade```
@@ -30,3 +31,10 @@ So I decided to try this with a newer release of Ubuntu, here we go.
   - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
   - ```apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools``` (because there's no qt5-default)
   - ```apt-get install libqt5serialport5-dev libqt5svg5-dev```
+  - ```apt-get install libgit2-dev```
+  - get boost math lib from [boost.org:](https://www.boost.org/users/download/)
+    - ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
+    - ```tar xzvf boost_1_84_0.tar.gz```
+  - set path: ```export PATH=/usr/lib/x86_64-linux-gnu/qt5/bin:$PATH```
+  - clone repo: ```git clone https://github.com/fritzing/fritzing-app.git```
+  - 
