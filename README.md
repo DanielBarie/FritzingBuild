@@ -51,6 +51,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - ```git clone https://github.com/fritzing/fritzing-parts```
  - change compile script (phoenix.pro):
    - allow for later versions of qt
+   - ```nano ./fritzing-app/phoenix.pro```
+   - change QT_MOST to 6.6.10 (or whatever is sufficiently high)
  - change boost detect script (will only accept up to 81)
    - ```nano ./fritzing-app/pri/boostdetect.pri```
    - find 81
