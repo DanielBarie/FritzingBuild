@@ -265,7 +265,7 @@ Maybe change to internal zlib?
 
 Hm. 
 ```
-dd libQt6Network.so
+ldd libQt6Network.so
 	linux-vdso.so.1 (0x00007ffce15ca000)
 	libQt6Core.so.6 => /home/daniel/fritzing-app/tools/linux_release_script/fritzing-1.0.2b_develop_private.linux.AMD64/lib/libQt6Core.so.6 (0x00007f21a4000000)
 	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f21a3c00000)
