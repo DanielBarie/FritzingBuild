@@ -4,11 +4,13 @@ Building Fritzing with Ubuntu 22.04 LTS
 # What?
 Obviously building fritzing for teaching purposes. End goal is having a release and building a VM for students to explore electrical circuits using fritzing.
 
-# Why?
-There's instructions for building fritzing on their Github: https://github.com/fritzing/fritzing-app/wiki/1.-Building-Fritzing  
-These do only refer to building from qt Studio, so you'll have to go through qt studio every time you might want to launch the app. Suboptimal for teaching purposes. Release build instructions (https://github.com/fritzing/fritzing-app/wiki/4.-Publishing-a-Release) are outdated with a link to setting up a build VM leading nowhere. The missing instructions are located at https://github.com/fritzing/fritzing-app/wiki/4.1-Via-Linux-on-a-virtual-box but refer to a very old Ubuntu release as build platform. 
+Compilation will give some deprecation warnings regarding Qt functions. Will work anyway, we'll maybe have to re-visit this if Qt remove these functions.
 
-There's another page called linux notes: https://github.com/fritzing/fritzing-app/wiki/1.3-Linux-notes
+# Why?
+- There's instructions for building fritzing on their Github: https://github.com/fritzing/fritzing-app/wiki/1.-Building-Fritzing
+- These do only refer to building from Qt Studio, so you'll have to go through Qt studio every time you might want to launch the app. Suboptimal for teaching purposes.
+- Release build instructions (https://github.com/fritzing/fritzing-app/wiki/4.-Publishing-a-Release) are outdated with a link to setting up a build VM leading nowhere. The missing instructions are located at https://github.com/fritzing/fritzing-app/wiki/4.1-Via-Linux-on-a-virtual-box but refer to a very old Ubuntu release as build platform.
+- There's another page called linux notes: https://github.com/fritzing/fritzing-app/wiki/1.3-Linux-notes
 
 All that documentation is inconclusive, inconsistent and outdated.
 
