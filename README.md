@@ -252,7 +252,10 @@ qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it 
 ```
 Checking for the libraries, they are installed? Must be a problem of the library path, it gets modified in Fritzing.sh. Trying to modify the library path to make sure the (installed) libs get used: ```export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu/:~/fritzing-app/tools/linux_release_script/fritzing-1.0.2b_develop_private.linux.AMD64/lib"```  doesn't change a thing.
 Wait, that was a red herring... Having activated plugin debug yields some more information: `libqxcb.so: (libQt6XcbQpa.so.6: Kann die Shared-Object-Datei nicht öffnen: Datei oder Verzeichnis nicht gefunden)"`
-
+Check dependencies:
+- `cd ~/qt-build/qt-everywhere-src-6.6.1/qtbase/plugins/platforms`
+- ` ldd libqxcb.so | grep qt-build`
+- copy over any file listed
 
 
 
