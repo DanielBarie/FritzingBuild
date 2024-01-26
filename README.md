@@ -261,7 +261,6 @@ Check dependencies:
 Look for any undefined symbols...
 ```nm libQt6Network.so | grep z_inflateInit``` will give ```U z_inflateInit2_@Qt_6``` indicating there's an undefined (lowercase u: internal) external (uppercase U) symbol.
 Check config.summary for Using System zlib = yes.
-Maybe change to internal zlib?
 
 Hm. 
 ```
@@ -301,7 +300,9 @@ Check against version used by Qt 6.6: https://doc.qt.io/qt-6/qtcore-attribution-
 ```
 Data Compression Library (zlib), version 1.3
 ```
-Here we are...
+Here we are... So there's some possible solutions:
+- Maybe change to Qt internal zlib. I don't feel like doing this. 
+- Compile later version and include in package. This doesn't work. 
 
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
