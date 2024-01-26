@@ -58,7 +58,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - cmake needs to be called with path to qt6 files:  cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
- - ```export QT_SELECT=qt6```
+ - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
  - ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
  - ```tar xzvf boost_1_84_0.tar.gz```
  - ```git clone https://github.com/fritzing/fritzing-app.git```
