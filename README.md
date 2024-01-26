@@ -79,6 +79,10 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```nano ./fritzing-app/pri/boostdetect.pri```
    - find 81
    - change to 84
+ - fix ngspice detection (will not set correct include dir)
+   - include must point to `../ngspice-40/src/include`but instead only points to `ngspice-40/include`
+   - `nano ./pri/spicedetect.pri`
+   - find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
  - `qmake`
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
