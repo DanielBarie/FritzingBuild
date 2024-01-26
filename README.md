@@ -131,6 +131,7 @@ The release script will clone the parts repo and include it.
 
 - `cd tools/linux_release_script`
 - `./release.sh 1.0.2b_develop_private`, we're including the keyword `develop` so we don't have to worry about the repo not being in a clean state. Modify version string to fit your needs.
+- `tar -cjf  ./1.0.2b_develop_private.tar.bz2 fritzing-1.0.2b_develop_private.linux.AMD64`: Won't create compressed file because we're not running Travis-CI.
 
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
