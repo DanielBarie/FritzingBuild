@@ -216,7 +216,7 @@ Well, that's how it happens: https://stackoverflow.com/questions/1361229/using-a
 
 There's two possible ways out of this:
 - create statically linkable libraries. While easy for the smaller depedencies (quazip etc...) I don't feel like doing it all over for Qt. See: https://doc.qt.io/archives/qt-4.8/deployment-x11.html
-- package libraries with app: Copy .so files into the lib dir of the packaged app. Or use https://github.com/probonopd/linuxdeployqt
+- package libraries with app: Copy .so files into the lib dir of the packaged app. Or use https://github.com/probonopd/linuxdeployqt see https://wiki.qt.io/Auto-deploying_your_Qt_Application
 
 ### Packaging Libraries with the app
 see modified release.sh script.
