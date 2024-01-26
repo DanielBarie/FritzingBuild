@@ -2,6 +2,9 @@
 Building Fritzing with Ubuntu 22.04 LTS
 
 Quite an expensive process figuring this out, about €1000 when taking my hourly wage. At least I've dusted off my software build skills. Repeated builds will of course be cheaper...
+![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/e97830fd-37e5-4151-91bf-8deac4182c02)
+![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/6673ce88-e0bf-4592-9234-d20469ed429b)
+
 
 # What?
 Obviously building Fritzing for teaching purposes. The goal is having a release and building a VM for students to explore electrical circuits and their simulation using Fritzing.
@@ -23,7 +26,21 @@ We'll set up a sufficiently beefy VM and get going in there. No containerized bu
 
 # To Do
 - maybe create a snap or flatpack?
-
+- fix simulator (include lib):
+  ```
+  Running command(remcirc):
+  qt.core.library: "ngspice" cannot load: Cannot load library ngspice: (/lib/x86_64-linux-gnu/ngspice: Kann die Datei-Daten nicht lesen: Ist ein Verzeichnis)
+  "Couldn't load ngspice Cannot load library ngspice: (/lib/x86_64-linux-gnu/ngspice: Kann die Datei-Daten nicht lesen: Ist ein Verzeichnis)"
+  "Try path /home/daniel/fritzing-app/tools/linux_release_script/fritzing-1.0.2b_develop_private.linux.AMD64/lib/libngspice.so"
+  "Try path /home/daniel/.local/share/Fritzing/Fritzing/libngspice.so"
+  "Try path /usr/share/gnome/Fritzing/Fritzing/libngspice.so"
+  "Try path /usr/local/share/Fritzing/Fritzing/libngspice.so"
+  "Try path /usr/share/Fritzing/Fritzing/libngspice.so"
+  "Try path /var/lib/snapd/desktop/Fritzing/Fritzing/libngspice.so"
+  "Could not find ngspice."
+  Running m_simulator->command('reset'):
+  ```
+- 
 ## Get build environment up and running
 Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us)
 - get Ubuntu 22.04 LTS
@@ -237,7 +254,7 @@ copy over sql plugin
 copy over image plugins
 make sure to have wayland plugin built for ubuntu
 
-epxort QT_QPA_PLATFORM=minimal works for building the database...
+export QT_QPA_PLATFORM=minimal works for building the database...
 
 Build database:  ./Fritzing -db "./fritzing-parts/parts.db" -pp "./fritzing-parts" -f "./"
 
@@ -302,8 +319,8 @@ Check against version used by Qt 6.6: https://doc.qt.io/qt-6/qtcore-attribution-
 Data Compression Library (zlib), version 1.3
 ```
 Here we are... So there's some possible solutions:
-- Maybe change to Qt internal zlib. I don't feel like doing this. 
-- Compile later version and include in package. This doesn't work. 
+- Maybe change to Qt internal zlib. I don't feel like doing this. But it works. Did it.
+- Compile later version of zlib and include in package. Make sure to include the z_ prefix 
 
 
 ## Static Qt build with internal zlib
