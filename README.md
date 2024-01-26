@@ -49,6 +49,12 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - change to unzip dir
    - ```./configure```
    - ```make```
+   - rename directory to `ngspice-40`
+ - get/compile quazip
+   - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
+   - untar
+   - rename to expected dir name e.g. `mv  quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
+   - cmake needs to be called with path to qt6 files:  cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  - ```export QT_SELECT=qt6```
@@ -64,7 +70,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```nano ./fritzing-app/pri/boostdetect.pri```
    - find 81
    - change to 84
- - `gmake`
+ - `qmake`
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
