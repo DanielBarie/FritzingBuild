@@ -69,28 +69,16 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - do clipper1 lib build
    - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
    - `mkdir Clipper1`, UPPERCASE!
-   - `mv clipper_ver6.4.2.zip clipper1`
-   - `cd cClipper1`
+   - `mv clipper_ver6.4.2.zip Clipper1`
+   - `cd Clipper1`
    - unzip
    - `cd cpp`
    - `mkdir build-dir`
    - `cd build-dir`
    - `cmake ..`
-   - `make`
-   - `sudo make install`, files will be in /usr/local/include/polyclipping and /usr/local/lib
-   - 
- - do clipper2 lib build
-   - `git clone https://github.com/AngusJohnson/Clipper2.git`
-   - `wget https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip`
-   - unzip
-   - `cd CPP`
-   - `mkdir /Tests/googletest`
-   - `cp -R ../../googletest-1.14.0/* ./Tests/googletest/`
-   - `mkdir build-dir`
-   - `cd build-dir`
-   - `cmake ..`
-   - `make`
-   - `sudo make install` (will go to /usr/local/lib and /usr/local/include)
+   - `make -j`
+   - optional system-wide installation: `sudo make install`, files will be in /usr/local/include/polyclipping and /usr/local/lib
+   - change pri/clipper1detect to reflect source file location 
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
@@ -110,6 +98,10 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - include must point to `../ngspice-40/src/include`but instead only points to `ngspice-40/include`
    - `nano ./pri/spicedetect.pri`
    - find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
+ - fix clipper detect script:
+   - `nano ./pri/clipper1detect.pri`
+   - change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be `LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping`
+   - change `INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping) to be `INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)`
  - `qmake`
  - `make`
 
@@ -159,4 +151,17 @@ Don't choose 22.04 LTS, because qt6 is 6.2.4. Fritzing 1.0.2 depends on qt 6.5.2
     - ```tar xzvf boost_1_84_0.tar.gz```
   - set path: ```export PATH=/usr/lib/x86_64-linux-gnu/qt6/bin:$PATH```
   - clone repo: ```git clone https://github.com/fritzing/fritzing-app.git```
-  - 
+
+ - do clipper2 lib build
+   - `git clone https://github.com/AngusJohnson/Clipper2.git`
+   - `wget https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip`
+   - unzip
+   - `cd CPP`
+   - `mkdir /Tests/googletest`
+   - `cp -R ../../googletest-1.14.0/* ./Tests/googletest/`
+   - `mkdir build-dir`
+   - `cd build-dir`
+   - `cmake ..`
+   - `make`
+   - `sudo make install` (will go to /usr/local/lib and /usr/local/include)
+ 
