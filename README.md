@@ -287,6 +287,17 @@ nm -D /lib/x86_64-linux-gnu/libz.so.1
 ```
 but no `z_inflateInit2_`. 
 
+Well, let's see the version:
+```
+dpkg -l | grep zlib
+ii  zlib1g:amd64                               1:1.2.11.dfsg-2ubuntu9.2                amd64        compression library - runtime
+ii  zlib1g-dev:amd64                           1:1.2.11.dfsg-2ubuntu9.2                amd64        compression library - development
+```
+Hm, 1.2.11. Let's see the latest source: https://github.com/madler/zlib/blob/develop/zconf.h
+```
+#  define inflateInit2_         z_inflateInit2_
+```
+
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
 Ubuntu 23.10.01  
