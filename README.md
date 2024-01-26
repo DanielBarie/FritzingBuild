@@ -46,6 +46,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - ```apt-get install pkg-config```
  - do qt build:- 
    - note: Be careful when re-configuring. There may be artifacts from previous builds. See https://stackoverflow.com/questions/6067271/qt-when-building-qt-from-source-how-do-i-clean-old-configure-configurations
+   - note: Documentation: https://doc.qt.io/qt-6/configure-options.html section "Reconfiguring Existing Builds"
    - note: Do also try removing 'CMakeCache.txt' from the build directory
    - note: Care about modules?  `/usr/local/Qt-6.6.1/bin/qt-configure-module`
    - note: Go static (see below)? 
