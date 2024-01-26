@@ -21,7 +21,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 - create vm (qt build will take approx 7 minutes)
   - 128 GB disk space (SSD)
   - 262144 MB RAM (64GB will be ok, too)
-  - 64 cores (if you have some to spare, hand them over...)
+  - 64 cores (if you have some to spare, hand them over...main issue is qt compilation, get the binaries if in a hurry)
   - network
 - install Ubuntu
   - minimal install
@@ -51,6 +51,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```make```
    - rename directory to `ngspice-40`
  - get/compile quazip
+   - `sudo apt-get install zlib1g-dev`
    - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
    - untar
    - rename to expected dir name e.g. `mv  quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
