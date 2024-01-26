@@ -22,7 +22,7 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 We'll set up a sufficiently beefy VM and get going in there. No containerized building.
 
 # To Do
-- Do static linking of libgit.
+- maybe create a snap or flatpack?
 
 ## Get build environment up and running
 Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us)
@@ -218,6 +218,9 @@ There's two possible ways out of this:
 - create statically linkable libraries. While easy for the smaller depedencies (quazip etc...) I don't feel like doing it all over for Qt.
 - package libraries with app: Copy .so files into the lib dir of the packaged app.
 
+### Packaging Libraries with the app
+see modified release.sh script.
+But: building the parts database needs a GUI? Well, we'll have to run this with a GUI, then.
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
