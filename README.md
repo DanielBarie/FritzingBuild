@@ -260,7 +260,8 @@ Check dependencies:
 ## Loading but crashing?
 Look for any undefined symbols...
 ```nm libQt6Network.so | grep z_inflateInit``` will give ```U z_inflateInit2_@Qt_6``` indicating there's an undefined (lowercase u: internal) external (uppercase U) symbol.
-
+Check config.summary for Using System zlib = yes.
+Maybe change to internal zlib?
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
