@@ -240,6 +240,7 @@ epxort QT_QPA_PLATFORM=minimal works for building the database...
 
 Build database:  ./Fritzing -db "./fritzing-parts/parts.db" -pp "./fritzing-parts" -f "./"
 
+Running the app doesn't work, even with platform plugins copied to correct directory (i.e. /lib/platforms), keeps complaining `Could not load the Qt platform plugin "wayland" in "" ` or whatever was specified.
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
