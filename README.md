@@ -173,9 +173,17 @@ linux-vdso.so.1 (0x00007ffc071de000)
 	/lib64/ld-linux-x86-64.so.2 (0x00007f1fa19fa000)
 ```
 A ton of libraries "not found". Sure, they have been exluded from linking because the release script is for dynamic linking. We need to fix this...
+Edit `phoenix.pro`:
+- add line `CONFIG += static`
+- change unix `QMAKE_CXXFLAGS` to add `-static` 
+
+Doesn't change much, huh?
+
 The reason can be found when looking at the output of the release script, it fails (pretty much silently): 
-```/Fritzing: error while loading shared libraries: libquazip1-qt6.so.1.4.0: cannot open shared object file: No such file or directory
-Failed at 115: ./Fritzing -db "${release_folder}/fritzing-parts/parts.db" -pp "${release_folder}/fritzing-parts" -f "${release_folder}"```
+```
+/Fritzing: error while loading shared libraries: libquazip1-qt6.so.1.4.0: cannot open shared object file: No such file or directory
+Failed at 115: ./Fritzing -db "${release_folder}/fritzing-parts/parts.db" -pp "${release_folder}/fritzing-parts" -f "${release_folder}"
+```
 Do an ldd to see:
 ```
 $fritzing-1.0.2b_develop_private.linux.AMD64/lib$ ldd Fritzing
@@ -203,6 +211,9 @@ $fritzing-1.0.2b_develop_private.linux.AMD64/lib$ ldd Fritzing
   libcrypto.so.3 => /lib/x86_64-linux-gnu/libcrypto.so.3 (0x00007fa317400000)
   /lib64/ld-linux-x86-64.so.2 (0x00007fa318df3000)
 ```
+So we now have some libraries which are linked statically, some dynamically?
+Well, that's how it happens: https://stackoverflow.com/questions/1361229/using-a-static-library-in-qt-creator
+
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
