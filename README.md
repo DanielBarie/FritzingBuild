@@ -222,6 +222,8 @@ There's two possible ways out of this:
 see modified release.sh script.
 But: building the parts database needs a GUI? Well, we'll have to run this with a GUI, then.
 
+Qt platform plugins are located at `/usr/local/Qt-6.6.1/plugins/platforms` after building qt. But no wayland, no xcb? check build logs...
+
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
 Ubuntu 23.10.01  
