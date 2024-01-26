@@ -50,7 +50,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - change to libgit dir
    - `mkdir build && cd build`
    - `cmake ..`
-   - `cmake --build .`
+   - `cmake --build . --parallel`
  - do spiceng build
    - get sources from https://ngspice.sourceforge.io/download.html
    - unzip
@@ -65,7 +65,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - untar
    - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
    - cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
-   - `cmake --build ./`
+   - `cmake --build ./ --parallel`
  - do clipper2 lib build
    - `git clone https://github.com/AngusJohnson/Clipper2.git`
    - `wget https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip`
@@ -98,6 +98,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `nano ./pri/spicedetect.pri`
    - find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
  - `qmake`
+ - `make`
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
