@@ -21,6 +21,9 @@ So I decided to try this with a newer release of Ubuntu, here we go.
 # How ?
 We'll set up a sufficiently beefy VM and get going in there. No containerized building.
 
+# To Do
+- Do static linking of libgit.
+
 ## Get build environment up and running
 Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us)
 - get Ubuntu 22.04 LTS
