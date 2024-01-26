@@ -21,6 +21,10 @@ All that documentation is inconclusive, inconsistent and outdated. This just is 
 
 So I decided to try this with a newer release of Ubuntu, here we go.
 
+# Alternatives?
+I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken.
+When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on).
+
 # How ?
 We'll set up a sufficiently beefy VM and get going in there. No containerized building.
 
@@ -166,6 +170,7 @@ The release script will clone the parts repo and include it.
 - remove number of parallel jobs limitation (i.e. change `-j16` to `-j`)
 - `./release.sh 1.0.2b_develop_private`, we're including the keyword `develop` so we don't have to worry about the repo not being in a clean state. Modify version string to fit your needs.
 - `tar -cjf  ./1.0.2b_develop_private.tar.bz2 fritzing-1.0.2b_develop_private.linux.AMD64`: Won't create compressed file because we're not running Travis-CI.
+- There's a modified version of the release script in this repo which copies over some (see spiceng) dependencies.
 
 ## Deploy Release
 
