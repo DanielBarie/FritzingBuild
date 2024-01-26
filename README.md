@@ -170,7 +170,7 @@ The release script will clone the parts repo and include it.
 - remove number of parallel jobs limitation (i.e. change `-j16` to `-j`)
 - `./release.sh 1.0.2b_develop_private`, we're including the keyword `develop` so we don't have to worry about the repo not being in a clean state. Modify version string to fit your needs.
 - `tar -cjf  ./1.0.2b_develop_private.tar.bz2 fritzing-1.0.2b_develop_private.linux.AMD64`: Won't create compressed file because we're not running Travis-CI.
-- There's a modified version of the release script in this repo which copies over some (see spiceng) dependencies.
+- There's a modified version of the release script in this repo which copies over some (see spiceng) dependencies. Please be aware that the paths to these dependencies are hard-coded for Qt 6.6.1 (and above build paths (qt-build)).
 
 ## Deploy Release
 
