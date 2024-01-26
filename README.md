@@ -127,8 +127,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `qmake`
    - `make`
    - everything ok? proceed... if not: fix
+   - `make clean`
    - `rm Makefile*`
-   - 
 
 ## Build Release
 Build releasable compressed file containing all required dependencies.
@@ -173,7 +173,36 @@ linux-vdso.so.1 (0x00007ffc071de000)
 	/lib64/ld-linux-x86-64.so.2 (0x00007f1fa19fa000)
 ```
 A ton of libraries "not found". Sure, they have been exluded from linking because the release script is for dynamic linking. We need to fix this...
-
+The reason can be found when looking at the output of the release script, it fails (pretty much silently): 
+```/Fritzing: error while loading shared libraries: libquazip1-qt6.so.1.4.0: cannot open shared object file: No such file or directory
+Failed at 115: ./Fritzing -db "${release_folder}/fritzing-parts/parts.db" -pp "${release_folder}/fritzing-parts" -f "${release_folder}"```
+Do an ldd to see:
+```
+$fritzing-1.0.2b_develop_private.linux.AMD64/lib$ ldd Fritzing
+  linux-vdso.so.1 (0x00007ffd83dbe000)
+  libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007fa318dc6000)
+  libgit2.so.1.7 => /home/daniel/libgit2-1.7.1/build/libgit2.so.1.7 (0x00007fa318031000)
+  libquazip1-qt6.so.1.4.0 => not found
+  libpolyclipping.so.22 => not found
+  libQt6PrintSupport.so.6 => not found
+  libQt6SvgWidgets.so.6 => not found
+  libQt6Widgets.so.6 => not found
+  libQt6Svg.so.6 => not found
+  libQt6Gui.so.6 => not found
+  libQt6Network.so.6 => not found
+  libQt6SerialPort.so.6 => not found
+  libQt6Sql.so.6 => not found
+  libQt6Xml.so.6 => not found
+  libQt6Core5Compat.so.6 => not found
+  libQt6Core.so.6 => not found
+  libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007fa317e00000)
+  libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007fa317d19000)
+  libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007fa318da0000)
+  libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fa317a00000)
+  libssl.so.3 => /lib/x86_64-linux-gnu/libssl.so.3 (0x00007fa317c75000)
+  libcrypto.so.3 => /lib/x86_64-linux-gnu/libcrypto.so.3 (0x00007fa317400000)
+  /lib64/ld-linux-x86-64.so.2 (0x00007fa318df3000)
+```
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
