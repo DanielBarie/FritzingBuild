@@ -297,6 +297,12 @@ Hm, 1.2.11. Let's see the latest source: https://github.com/madler/zlib/blob/dev
 ```
 #  define inflateInit2_         z_inflateInit2_
 ```
+Check against version used by Qt 6.6: https://doc.qt.io/qt-6/qtcore-attribution-zlib.html
+```
+Data Compression Library (zlib), version 1.3
+```
+Here we are...
+
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
