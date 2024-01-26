@@ -78,7 +78,16 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `cmake ..`
    - `make -j`
    - optional system-wide installation: `sudo make install`, files will be in /usr/local/include/polyclipping and /usr/local/lib
-   - change pri/clipper1detect to reflect source file location 
+ - build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
+   - `git clone https://github.com/svgpp/svgpp.git`
+   - `sudo apt-get install libxml2-dev`
+   - `mv svgpp svgpp-1.3.0`
+   - `cd svgpp-1.3.0`
+   - `mkdir build-dir`
+   - `cd build-dir`
+   - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
+   - `make -j` (go fast)
+   - 
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
@@ -105,6 +114,9 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - fix quazip detect script:
    - `nano pri/quazipdetect.pri`
    - change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
+ - fix svgpp detect script:
+   - `nano pri/svgppdetect.pri`
+   - change 
  - `qmake`
  - `make`
 
