@@ -77,6 +77,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `cd build-dir`
    - `cmake ..`
    - `make`
+   - `sudo make install` (will go to /usr/local/lib and /usr/local/include)
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
