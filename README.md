@@ -157,10 +157,11 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `rm Makefile*`
 
 ## Build Release
-Build releasable compressed file containing all required dependencies.
+Build releasable compressed file containing (to be done) all required dependencies.
 The release script will clone the parts repo and include it.
 
 - `cd tools/linux_release_script`
+- `export QT_QPA_PLATFORM=minimal` `offscreen` also does.
 - `nano release.sh`
 - remove number of parallel jobs limitation (i.e. change `-j16` to `-j`)
 - `./release.sh 1.0.2b_develop_private`, we're including the keyword `develop` so we don't have to worry about the repo not being in a clean state. Modify version string to fit your needs.
