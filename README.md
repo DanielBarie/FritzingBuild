@@ -68,9 +68,9 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `cmake --build ./ --parallel`
  - do clipper1 lib build
    - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
-   - `mkdir clipper1`
+   - `mkdir Clipper1`, UPPERCASE!
    - `mv clipper_ver6.4.2.zip clipper1`
-   - `cd clipper1`
+   - `cd cClipper1`
    - unzip
    - `cd cpp`
    - `mkdir build-dir`
