@@ -242,6 +242,20 @@ Build database:  ./Fritzing -db "./fritzing-parts/parts.db" -pp "./fritzing-part
 
 Running the app doesn't work, even with platform plugins copied to correct directory (i.e. /lib/platforms), keeps complaining `Could not load the Qt platform plugin "wayland" in "" ` or whatever was specified.
 
+## Still not loading?
+Maybe there's some unmet dependencies for the platform plugin you're trying to use.
+Do `export QT_DEBUG_PLUGINS=1` and try running again.
+When running the exe, we'll see some more output:
+```
+qt.qpa.plugin: From 6.5.0, xcb-cursor0 or libxcb-cursor0 is needed to load the Qt xcb platform plugin.
+qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
+```
+Checking for the libraries, they are installed? Must be a problem of the library path, it gets modified in Fritzing.sh. Trying to modify the library path to make sure the (installed) libs get used: ```export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu/:~/fritzing-app/tools/linux_release_script/fritzing-1.0.2b_develop_private.linux.AMD64/lib"```  doesn't change a thing.
+Wait, that was a red herring... Having activated plugin debug yields some more information: `libqxcb.so: (libQt6XcbQpa.so.6: Kann die Shared-Object-Datei nicht öffnen: Datei oder Verzeichnis nicht gefunden)"`
+
+
+
+
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
 Ubuntu 23.10.01  
