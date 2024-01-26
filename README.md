@@ -143,7 +143,7 @@ The release script will clone the parts repo and include it.
 ## Deploy Release
 
 # FAQ
-## Complains about missing libgit2.so.1.7
+## Complains about missing libgit2.so.1.7 (or any other shared library)
 Error message: ```<our installation dir>/lib/Fritzing: error while loading shared libraries: libgit2.so.1.7: cannot open shared object file: No such file or directory```.   
 Go do a 
 - `cd <our installation dir>/lib`
@@ -216,7 +216,7 @@ Well, that's how it happens: https://stackoverflow.com/questions/1361229/using-a
 
 There's two possible ways out of this:
 - create statically linkable libraries. While easy for the smaller depedencies (quazip etc...) I don't feel like doing it all over for Qt. See: https://doc.qt.io/archives/qt-4.8/deployment-x11.html
-- package libraries with app: Copy .so files into the lib dir of the packaged app.
+- package libraries with app: Copy .so files into the lib dir of the packaged app. Or use https://github.com/probonopd/linuxdeployqt
 
 ### Packaging Libraries with the app
 see modified release.sh script.
