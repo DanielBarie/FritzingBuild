@@ -308,6 +308,27 @@ Here we are... So there's some possible solutions:
 
 ## Static Qt build with internal zlib
 './configure -static -prefix ~/qt-build//qt-everywhere-src-6.6.1 -qt-zlib'
+```
+nm ./qtbase/lib/libQt6BundledZLIB.a
+...
+0000000000000420 T z_inflateInit_
+0000000000000330 T z_inflateInit2_
+...
+```
+Hm. 
+```
+ ldd  ./qtbase/lib/libQt6Network.so.6.6.1
+        linux-vdso.so.1 (0x00007ffd47fe8000)
+        libQt6Core.so.6 => not found
+        libbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x00007f463371a000)
+        libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f4633400000)
+        libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f46336fa000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f4633000000)
+        libbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007f46336d5000)
+        libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f4633319000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f46338f1000)
+```
+So when building with internal zlib, the z_ prefix will be used and the network lib will be happily including the internal zlib.
 
 ## The heck. 
 See zlib header file:
