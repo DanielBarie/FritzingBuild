@@ -215,7 +215,7 @@ So we now have some libraries which are linked statically, some dynamically?
 Well, that's how it happens: https://stackoverflow.com/questions/1361229/using-a-static-library-in-qt-creator
 
 There's two possible ways out of this:
-- create statically linkable libraries. While easy for the smaller depedencies (quazip etc...) I don't feel like doing it all over for Qt.
+- create statically linkable libraries. While easy for the smaller depedencies (quazip etc...) I don't feel like doing it all over for Qt. See: https://doc.qt.io/archives/qt-4.8/deployment-x11.html
 - package libraries with app: Copy .so files into the lib dir of the packaged app.
 
 ### Packaging Libraries with the app
