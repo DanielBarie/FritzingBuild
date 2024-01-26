@@ -100,8 +100,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
  - fix clipper detect script:
    - `nano ./pri/clipper1detect.pri`
-   - change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be `LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping`
-   - change `INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping) to be `INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)`
+   - change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be ```LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping``` 
+   - change ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping)``` to be ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)```
  - `qmake`
  - `make`
 
