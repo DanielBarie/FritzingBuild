@@ -17,6 +17,8 @@ All that documentation is inconclusive, inconsistent and outdated. This just is 
 So I decided to try this with a newer release of Ubuntu, here we go.
 
 # How ?
+We'll set up a sufficiently beefy VM and get going in there. No containerized building.
+
 ## Get build environment up and running
 Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us)
 - get Ubuntu 22.04 LTS
@@ -115,9 +117,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - fix quazip detect script:
    - `nano pri/quazipdetect.pri`
    - change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
- - fix svgpp detect script:
-   - `nano pri/svgppdetect.pri`
-   - change 
+   - change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
+ 
  - `qmake`
  - `make`
 
