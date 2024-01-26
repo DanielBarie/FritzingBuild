@@ -1,10 +1,12 @@
 # FritzingBuild
 Building Fritzing with Ubuntu 22.04 LTS
 
-# What?
-Obviously building fritzing for teaching purposes. End goal is having a release and building a VM for students to explore electrical circuits using fritzing.
+Quite an expensive process figuring this out, about €1000 when taking my hourly wage. At least I've dusted off my software build skills. Repeated builds will of course be cheaper...
 
-Compilation will give some deprecation warnings regarding Qt functions. Will work anyway, we'll maybe have to re-visit this if Qt remove these functions.
+# What?
+Obviously building Fritzing for teaching purposes. The goal is having a release and building a VM for students to explore electrical circuits and their simulation using Fritzing.
+
+Compilation will give some deprecation warnings regarding Qt functions. Will work anyway, we'll maybe have to re-visit this if Qt remove/change these functions.
 
 # Why?
 - There's instructions for building fritzing on their Github: https://github.com/fritzing/fritzing-app/wiki/1.-Building-Fritzing
@@ -118,9 +120,18 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `nano pri/quazipdetect.pri`
    - change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
    - change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
- 
- - `qmake`
- - `make`
+ - test build
+   - `qmake`
+   - `make`
+   - everything ok? proceed...
+
+## Build Release
+Build releasable compressed file containing all required dependencies.
+The release script will clone the parts repo and include it.
+
+- `cd tools/linux_release_script`
+- `./release.sh 1.0.2b_develop_private`, we're including the keyword `develop` so we don't have to worry about the repo not being in a clean state. Modify version string to fit your needs.
+
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
