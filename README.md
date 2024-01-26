@@ -306,6 +306,9 @@ Here we are... So there's some possible solutions:
 - Compile later version and include in package. This doesn't work. 
 
 
+## Static Qt build with internal zlib
+'./configure -static -prefix ~/qt-build//qt-everywhere-src-6.6.1 -qt-zlib'
+
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
 Ubuntu 23.10.01  
