@@ -51,7 +51,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```make```
    - rename directory to `ngspice-40`
  - get/compile quazip
-   - `sudo apt-get install zlib1g-dev`
+   - `sudo apt-get install zlib1g-dev libbz2-dev`
    - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
    - untar
    - rename to expected dir name e.g. `mv  quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
