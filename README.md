@@ -123,7 +123,9 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - test build
    - `qmake`
    - `make`
-   - everything ok? proceed...
+   - everything ok? proceed... if not: fix
+   - `rm Makefile*`
+   - 
 
 ## Build Release
 Build releasable compressed file containing all required dependencies.
