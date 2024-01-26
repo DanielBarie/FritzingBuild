@@ -309,6 +309,22 @@ Here we are... So there's some possible solutions:
 ## Static Qt build with internal zlib
 './configure -static -prefix ~/qt-build//qt-everywhere-src-6.6.1 -qt-zlib'
 
+## The heck. 
+See zlib header file:
+Why would someone do that?
+```
+#define ZCONF_H
+
+/*
+ * If you *really* need a unique prefix for all types and library functions,
+ * compile with -DZ_PREFIX. The "standard" zlib should be compiled without it.
+ * Even better than compiling with -DZ_PREFIX would be to use configure to set
+ * this permanently in zconf.h using "./configure --zprefix".
+ */
+#ifdef Z_PREFIX     /* may be set to #if 1 by ./configure */
+#  define Z_PREFIX_SET
+```
+
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
 Ubuntu 23.10.01  
