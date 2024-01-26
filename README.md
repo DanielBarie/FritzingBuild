@@ -66,6 +66,19 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
    - cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
    - `cmake --build ./ --parallel`
+ - do clipper1 lib build
+   - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
+   - `mkdir clipper1`
+   - `mv clipper_ver6.4.2.zip clipper1`
+   - `cd clipper1`
+   - unzip
+   - `cd cpp`
+   - `mkdir build-dir`
+   - `cd build-dir`
+   - `cmake ..`
+   - `make`
+   - `sudo make install`, files will be in /usr/local/include/polyclipping and /usr/local/lib
+   - 
  - do clipper2 lib build
    - `git clone https://github.com/AngusJohnson/Clipper2.git`
    - `wget https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip`
