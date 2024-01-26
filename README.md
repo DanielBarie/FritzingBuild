@@ -263,6 +263,30 @@ Look for any undefined symbols...
 Check config.summary for Using System zlib = yes.
 Maybe change to internal zlib?
 
+Hm. 
+```
+dd libQt6Network.so
+	linux-vdso.so.1 (0x00007ffce15ca000)
+	libQt6Core.so.6 => /home/daniel/fritzing-app/tools/linux_release_script/fritzing-1.0.2b_develop_private.linux.AMD64/lib/libQt6Core.so.6 (0x00007f21a4000000)
+	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f21a3c00000)
+	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f21a47e7000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f21a3800000)
+	libicui18n.so.70 => /lib/x86_64-linux-gnu/libicui18n.so.70 (0x00007f21a3400000)
+	libicuuc.so.70 => /lib/x86_64-linux-gnu/libicuuc.so.70 (0x00007f21a3205000)
+	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f21a47c9000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f21a3f19000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f21a49cf000)
+	libicudata.so.70 => /lib/x86_64-linux-gnu/libicudata.so.70 (0x00007f21a1400000)
+```
+Loads `libz.so.1`. Let's see if theres an appropriate symbol:
+```
+nm -D /lib/x86_64-linux-gnu/libz.so.1
+....
+000000000000cd30 T inflateInit2_
+...
+```
+but no `z_inflateInit2_`. 
+
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
 Ubuntu 23.10.01  
