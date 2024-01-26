@@ -22,8 +22,8 @@ All that documentation is inconclusive, inconsistent and outdated. This just is 
 So I decided to try this with a newer release of Ubuntu, here we go.
 
 # Alternatives?
-I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken.
-When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on).
+I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken. Don't choose 22.04 LTS, because Qt is 6.2.4. Fritzing 1.0.2 depends on Qt > 6.5.2. Don't choose Ubuntu 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```  
+When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on). But this also uses Qt 6.4.2. So having the correct version of Qt is the main issue...
 
 # How ?
 We'll set up a sufficiently beefy VM and get going in there. No containerized building.
