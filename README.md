@@ -144,7 +144,35 @@ The release script will clone the parts repo and include it.
 
 # FAQ
 ## Complains about missing libgit2.so.1.7
-Error message: ```<our installation dir>/lib/Fritzing: error while loading shared libraries: libgit2.so.1.7: cannot open shared object file: No such file or directory```
+Error message: ```<our installation dir>/lib/Fritzing: error while loading shared libraries: libgit2.so.1.7: cannot open shared object file: No such file or directory```.   
+Go do a 
+- `cd <our installation dir>/lib`
+- `ldd Fritzing`
+You'll probably see something like this:
+```
+linux-vdso.so.1 (0x00007ffc071de000)
+	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f1fa19cd000)
+	libgit2.so.1.7 => not found
+	libquazip1-qt6.so.1.4.0 => not found
+	libpolyclipping.so.22 => not found
+	libQt6PrintSupport.so.6 => not found
+	libQt6SvgWidgets.so.6 => not found
+	libQt6Widgets.so.6 => not found
+	libQt6Svg.so.6 => not found
+	libQt6Gui.so.6 => not found
+	libQt6Network.so.6 => not found
+	libQt6SerialPort.so.6 => not found
+	libQt6Sql.so.6 => not found
+	libQt6Xml.so.6 => not found
+	libQt6Core5Compat.so.6 => not found
+	libQt6Core.so.6 => not found
+	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f1fa0a00000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f1fa0d19000)
+	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f1fa19a7000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f1fa0600000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f1fa19fa000)
+```
+A ton of libraries "not found". Sure, they have been exluded from linking because the release script is for dynamic linking. We need to fix this...
 
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
