@@ -214,6 +214,10 @@ $fritzing-1.0.2b_develop_private.linux.AMD64/lib$ ldd Fritzing
 So we now have some libraries which are linked statically, some dynamically?
 Well, that's how it happens: https://stackoverflow.com/questions/1361229/using-a-static-library-in-qt-creator
 
+There's two possible ways out of this:
+- create statically linkable libraries. While easy for the smaller depedencies (quazip etc...) I don't feel like doing it all over for Qt.
+- package libraries with app: Copy .so files into the lib dir of the packaged app.
+
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
