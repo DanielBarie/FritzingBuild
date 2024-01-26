@@ -12,7 +12,7 @@ Compilation will give some deprecation warnings regarding Qt functions. Will wor
 - Release build instructions (https://github.com/fritzing/fritzing-app/wiki/4.-Publishing-a-Release) are outdated with a link to setting up a build VM leading nowhere. The missing instructions are located at https://github.com/fritzing/fritzing-app/wiki/4.1-Via-Linux-on-a-virtual-box but refer to a very old Ubuntu release as build platform.
 - There's another page called linux notes: https://github.com/fritzing/fritzing-app/wiki/1.3-Linux-notes
 
-All that documentation is inconclusive, inconsistent and outdated.
+All that documentation is inconclusive, inconsistent and outdated. This just is a huge pain.
 
 So I decided to try this with a newer release of Ubuntu, here we go.
 
@@ -66,6 +66,17 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
    - cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
    - `cmake --build ./`
+ - do clipper2 lib build
+   - `git clone https://github.com/AngusJohnson/Clipper2.git`
+   - `wget https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip`
+   - unzip
+   - `cd CPP`
+   - `mkdir /Tests/googletest`
+   - `cp -R ../../googletest-1.14.0/* ./Tests/googletest/`
+   - `mkdir build-dir`
+   - `cd build-dir`
+   - `cmake ..`
+   - `make`
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
