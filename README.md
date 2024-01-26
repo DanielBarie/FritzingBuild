@@ -45,13 +45,16 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - ```apt-get install libdrm-dev libgles2-mesa-dev```
  - ```apt-get install pkg-config```
  - do qt build:
-   - `sudo apt-get install libwayland-dev  libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`   
+   - `sudo apt-get install libwayland-dev  libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`
+   - `sudo apt-get install libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-cursor-dev libxcb-glx0-dev`
+   - `sudo apt-get install libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-util-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev`
+   - `sudo apt-get install libxrender1 libxcb-render-util0 libxcb-shape0 libxcb-randr0 libxcb-xfixes0 libxcb-xkb1 libxcb-sync1 libxcb-shm0  libxcb-icccm4 libxcb-keysyms1-dev libxcb-image0  libxcb-util1 libxcb-cursor0 libxkbcommon-tools libxkbcommon-x11-0 libxcbcommon0
    - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
    - untar the sources: `tar xf...` takes a while in silence...
    - go to directory
    - ```./configure```
    - ```cmake --build . --parallel```
-   - ```cmake --install .```will install to /usr/local/Qt-6.6.1
+   - ```sudo cmake --install .```will install to /usr/local/Qt-6.6.1
  - do libgit build:
    - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
    - untar
@@ -224,6 +227,15 @@ see modified release.sh script.
 But: building the parts database needs a GUI? Well, we'll have to run this with a GUI, then.
 
 Qt platform plugins are located at `/usr/local/Qt-6.6.1/plugins/platforms` after building qt. But no wayland, no xcb? check build logs...
+
+copy over sql plugin
+copy over image plugins
+make sure to have wayland plugin built for ubuntu
+
+epxort QT_QPA_PLATFORM=minimal works for building the database...
+
+Build database:  ./Fritzing -db "./fritzing-parts/parts.db" -pp "./fritzing-parts" -f "./"
+
 
 Don't choose 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```   
 But since we're at it... 
