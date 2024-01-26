@@ -42,6 +42,13 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - ```./configure```
    - ```cmake --build . --parallel```
    - ```cmake --install .```will install to /usr/local/Qt-6.6.1
+ - do libgit build:
+   - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
+   - untar
+   - change to libgit dir
+   - `mkdir build && cd build`
+   - `cmake ..`
+   - `cmake --build .`
  - do spiceng build
    - get sources from https://ngspice.sourceforge.io/download.html
    - unzip
@@ -54,8 +61,9 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `sudo apt-get install zlib1g-dev libbz2-dev`
    - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
    - untar
-   - rename to expected dir name e.g. `mv  quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
-   - cmake needs to be called with path to qt6 files:  cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"
+   - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
+   - cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
+   - `cmake --build ./`
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
