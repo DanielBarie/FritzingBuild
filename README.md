@@ -131,20 +131,23 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
   
 # Dynamically linked, Qt-zlib
 - Do Qt build:
-	- Go to directory: `cd qt-everywhere-src-6.6.1`
+	- Go to directory: `cd qt-everywhere-src-6.6.1`  
   - ```./configure -qt-zlib```
   - ```cmake --build . --parallel```
-  - optional: ```sudo cmake --install .```will install to /usr/local/Qt-6.6.1
-	- ```apt-get install qtchooser```
- 	- ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
- 	- ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
+  - optional: ```sudo cmake --install .``` will install to /usr/local/Qt-6.6.1
+  - ```apt-get install qtchooser```
+  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
+  - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
+
 - Prepare and do Fritzing build
- 	- ```git clone https://github.com/fritzing/fritzing-app.git```
- 	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
+	- ```git clone https://github.com/fritzing/fritzing-app.git```
+	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
+  
 	- change compile script (phoenix.pro):
 		- allow for later versions of qt
    	- ```nano ./fritzing-app/phoenix.pro```
    	- change QT_MOST to 6.6.10 (or whatever is sufficiently high)
+  
  	- change boost detect script (will only accept up to 81)
 		- ```nano ./fritzing-app/pri/boostdetect.pri```
    	- find 81
