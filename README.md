@@ -77,52 +77,11 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 
 
 # This is where the common part stops
-Below steps are for shared libs / dynamic linking and in wrong order (must build Qt before quazip)
+Below steps are different for shared libs / dynamic linking and static linkin.
 
-- do libgit build or install `sudo apt-get install libgit2-dev` and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
-   - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
-   - untar
-   - change to libgit dir
-   - `mkdir build && cd build`
-   - `cmake ..`
-   - `cmake --build . --parallel`
- - do spiceng build or install shared lib devel package (https://packages.ubuntu.com/search?keywords=ngspice ngspice-dev) and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
-   - get sources from https://ngspice.sourceforge.io/download.html
-   - unzip
-   - ```apt-get install libxaw7-dev```
-   - change to unzip dir
-   - ```./configure```
-   - ```make```
-   - rename directory to `ngspice-40`
- - get/compile quazip
-   - `sudo apt-get install zlib1g-dev libbz2-dev`
-   - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
-   - untar
-   - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
-   - cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
-   - `cmake --build ./ --parallel`
- - do clipper1 lib build
-   - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
-   - `mkdir Clipper1`, UPPERCASE!
-   - `mv clipper_ver6.4.2.zip Clipper1`
-   - `cd Clipper1`
-   - unzip
-   - `cd cpp`
-   - `mkdir build-dir`
-   - `cd build-dir`
-   - `cmake ..`
-   - `make -j`
-   - optional system-wide installation: `sudo make install`, files will be in /usr/local/include/polyclipping and /usr/local/lib
- - build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
-   - `git clone https://github.com/svgpp/svgpp.git`
-   - `sudo apt-get install libxml2-dev`
-   - `mv svgpp svgpp-1.3.0`
-   - `cd svgpp-1.3.0`
-   - `mkdir build-dir`
-   - `cd build-dir`
-   - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
-   - `make -j` (go fast)
-- prepare Qt build
+  
+# Dynamically linked, Qt-zlib
+## Prepare and Do Qt build
   - note: Be careful when re-configuring. There may be artifacts from previous builds. See https://stackoverflow.com/questions/6067271/qt-when-building-qt-from-source-how-do-i-clean-old-configure-configurations
   - note: Documentation: https://doc.qt.io/qt-6/configure-options.html section "Reconfiguring Existing Builds"
   - note: Do also try removing 'CMakeCache.txt' from the build directory
@@ -136,8 +95,6 @@ Below steps are for shared libs / dynamic linking and in wrong order (must build
   - `cd qt-build`
   - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
   - untar the sources: `tar xf...` takes a while in silence...
-  
-# Dynamically linked, Qt-zlib
 - Do Qt build:
 	- Go to directory: `cd qt-everywhere-src-6.6.1`  
   - ```./configure -qt-zlib```
@@ -146,7 +103,54 @@ Below steps are for shared libs / dynamic linking and in wrong order (must build
   - ```apt-get install qtchooser```
   - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
   - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
-- Prepare Fritzing build
+ 
+## do libgit build 
+or install `sudo apt-get install libgit2-dev` and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
+   - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
+   - untar
+   - change to libgit dir
+   - `mkdir build && cd build`
+   - `cmake ..`
+   - `cmake --build . --parallel`
+ ## do spiceng build 
+or install shared lib devel package (https://packages.ubuntu.com/search?keywords=ngspice ngspice-dev) and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
+   - get sources from https://ngspice.sourceforge.io/download.html
+   - unzip
+   - ```apt-get install libxaw7-dev```
+   - change to unzip dir
+   - ```./configure```
+   - ```make```
+   - rename directory to `ngspice-40`
+ ## get/compile quazip
+   - `sudo apt-get install zlib1g-dev libbz2-dev`
+   - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
+   - untar
+   - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
+   - cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
+   - `cmake --build ./ --parallel`
+## do clipper1 lib build
+   - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
+   - `mkdir Clipper1`, UPPERCASE!
+   - `mv clipper_ver6.4.2.zip Clipper1`
+   - `cd Clipper1`
+   - unzip
+   - `cd cpp`
+   - `mkdir build-dir`
+   - `cd build-dir`
+   - `cmake ..`
+   - `make -j`
+   - optional system-wide installation: `sudo make install`, files will be in /usr/local/include/polyclipping and /usr/local/lib
+## build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
+   - `git clone https://github.com/svgpp/svgpp.git`
+   - `sudo apt-get install libxml2-dev`
+   - `mv svgpp svgpp-1.3.0`
+   - `cd svgpp-1.3.0`
+   - `mkdir build-dir`
+   - `cd build-dir`
+   - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
+   - `make -j` (go fast)
+
+## Prepare Fritzing build
   - ```git clone https://github.com/fritzing/fritzing-app.git```
 	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
 	- change compile script (phoenix.pro):
@@ -191,7 +195,7 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - ```qtchooser -install qt6 /opt/Qt6.6.1/bin/qmake```
 - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
-## Do libgit2 build (static)
+## Do libgit2 Build (static)
 - `cd ~`
 - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
 - `tar xzvf v1.7.1.tar.gz`
@@ -203,7 +207,7 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
  - `cmake --build . --parallel`
  - optional: check for `libgit2.a` being present in build dir `ls -lsah libgit2.a`
 
-## Do spiceng build (static)
+## Do spiceng Build (static)
 - `sudo apt-get install libxaw7-dev`
 - no: `./configure -enable-static`
 - edit `configure.ac`
@@ -239,7 +243,7 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - Indicator of success: watch for ```[100%] Linking CXX static library libpolyclipping.a```
 - library file will be in `~/Clipper1/cpp/build-dir`
 
-# DO quazip build (static)
+## Do quazip Build (static)
 - `sudo apt-get install zlib1g-dev libbz2-dev`
 - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
 - untar
@@ -255,7 +259,7 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - indicator of success: look for ```[100%] Linking CXX static library libquazip1-qt6.a```
 - library (`libquazip1-qt6.a`) will be in `~/quazip-6.6.1-1.4/build-dir/quazip`
 
-# Do SVGPP Library Build 
+## Do SVGPP Library Build 
 Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - `git clone https://github.com/svgpp/svgpp.git`
 - `sudo apt-get install libxml2-dev`
@@ -266,7 +270,7 @@ Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
 - `make -j` (go fast)
 
-# Build Release
+# Build Release (dynamic linking)
 Build releasable compressed file containing (to be done) all required dependencies.
 The release script will clone the parts repo and include it.
 
