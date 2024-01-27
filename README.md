@@ -183,7 +183,7 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - ```cmake --build . --parallel```
 - ```sudo cmake --install .``` will install to /opt/Qt6.6.1
 - ```apt-get install qtchooser```
-- ```qtchooser -install qt6 /opt/qt6.6.1/bin/qmake```
+- ```qtchooser -install qt6 /opt/Qt6.6.1/bin/qmake```
 - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
 
