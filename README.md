@@ -299,6 +299,7 @@ Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - fix quazip detect script:
    	- `nano pri/quazipdetect.pri`
    	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
+   	- change `QUAZIP_LIB_PATH=$$QUAZIP_PATH/lib` to be `QUAZIP_LIB_PATH=$$QUAZIP_PATH`
    	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/build-dir/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
 - fix libgit detect script:
 	- `nano pri/libgit2detect.pri`
