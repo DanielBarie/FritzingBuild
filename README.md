@@ -47,8 +47,10 @@ We'll set up a sufficiently beefy VM and get going in there. No containerized bu
   Running m_simulator->command('reset'):
   ```
 
-# Ubuntu 22.04 Build Environment, dynamically linked, Qt-zlib
-## Get build environment up and running
+# Common Steps for Ubuntu 22.04 Build Environment
+Set up the basic build environment (VM, dependencies) for building Fritzing.  
+Having completed that, you may choose to build Fritzing linked either dynamically or statically. The main difference is the Qt build.  
+
 Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us (pdf components))
 - get Ubuntu 22.04 LTS
 - create VM (Qt build will take approx 7 minutes with below resource configuration, AMD Epyc at 2.3GHz)
@@ -68,23 +70,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev```
  - ```apt-get install libdrm-dev libgles2-mesa-dev```
  - ```apt-get install pkg-config```
- - do qt build:- 
-   - note: Be careful when re-configuring. There may be artifacts from previous builds. See https://stackoverflow.com/questions/6067271/qt-when-building-qt-from-source-how-do-i-clean-old-configure-configurations
-   - note: Documentation: https://doc.qt.io/qt-6/configure-options.html section "Reconfiguring Existing Builds"
-   - note: Do also try removing 'CMakeCache.txt' from the build directory
-   - note: Care about modules?  `/usr/local/Qt-6.6.1/bin/qt-configure-module`
-   - note: Go static (see below)? 
-   - `sudo apt-get install libwayland-dev  libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`
-   - `sudo apt-get install libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-cursor-dev libxcb-glx0-dev`
-   - `sudo apt-get install libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-util-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev`
-   - `sudo apt-get install libxrender1 libxcb-render-util0 libxcb-shape0 libxcb-randr0 libxcb-xfixes0 libxcb-xkb1 libxcb-sync1 libxcb-shm0  libxcb-icccm4 libxcb-keysyms1-dev libxcb-image0  libxcb-util1 libxcb-cursor0 libxkbcommon-tools libxkbcommon-x11-0 libxcbcommon0 libfontconfig0 libfreetype6 libxext6 libx11-6 libxcb1 libx11-xcb1 libsm6 libice6 libglib2.0-0 libglib2.0-bin`
-   - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
-   - untar the sources: `tar xf...` takes a while in silence...
-   - go to directory
-   - ```./configure -qt-zlib```
-   - ```cmake --build . --parallel```
-   - ```sudo cmake --install .```will install to /usr/local/Qt-6.6.1
- - do libgit build:
+- do libgit build:
    - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
    - untar
    - change to libgit dir
@@ -127,6 +113,28 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `cd build-dir`
    - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
    - `make -j` (go fast)
+- prepare Qt build
+  - note: Be careful when re-configuring. There may be artifacts from previous builds. See https://stackoverflow.com/questions/6067271/qt-when-building-qt-from-source-how-do-i-clean-old-configure-configurations
+  - note: Documentation: https://doc.qt.io/qt-6/configure-options.html section "Reconfiguring Existing Builds"
+  - note: Do also try removing 'CMakeCache.txt' from the build directory
+  - note: Care about modules?  `/usr/local/Qt-6.6.1/bin/qt-configure-module`
+  - note: Go static (see below)? 
+  - `sudo apt-get install libwayland-dev  libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`
+  - `sudo apt-get install libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-cursor-dev libxcb-glx0-dev`
+  - `sudo apt-get install libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-util-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev`
+  - `sudo apt-get install libxrender1 libxcb-render-util0 libxcb-shape0 libxcb-randr0 libxcb-xfixes0 libxcb-xkb1 libxcb-sync1 libxcb-shm0  libxcb-icccm4 libxcb-keysyms1-dev libxcb-image0  libxcb-util1 libxcb-cursor0 libxkbcommon-tools libxkbcommon-x11-0 libxcbcommon0 libfontconfig0 libfreetype6 libxext6 libx11-6 libxcb1 libx11-xcb1 libsm6 libice6 libglib2.0-0 libglib2.0-bin`
+  - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
+  - untar the sources: `tar xf...` takes a while in silence...
+  
+## Dynamically linked, Qt-zlib
+ - do qt build:
+
+ 
+   - go to directory
+   - ```./configure -qt-zlib```
+   - ```cmake --build . --parallel```
+   - ```sudo cmake --install .```will install to /usr/local/Qt-6.6.1
+ 
    - 
  - ```apt-get install qtchooser```
  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
