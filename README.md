@@ -208,7 +208,20 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
  	- line 636 change to static and include lib ver
  - `./compile_linux_shared.sh 64`
  - result will be found in `~/ngspice-42/releasesh/src/.libs` (`libngspice.a`), approx. 18MB, don't worry about failed install (can't write to system dirs without sufficient privileges, obviously...)
-- 
+
+## Do Clipping Library Build (static)
+- change `cpp/CMakeLists.txt`:
+	- find
+ 		```
+   		SET(BUILD_SHARED_LIBS ON CACHE BOOL
+    		"Build shared libraries (.dll/.so) instead of static ones (.lib/.a)")
+		```  
+ 	- change to:
+  - 		```
+   		SET(BUILD_SHARED_LIBS OFF CACHE BOOL
+    		"Don't Build shared libraries (.dll/.so) instead of static ones (.lib/.a)")
+		```  
+  - 
 
 # Build Release
 Build releasable compressed file containing (to be done) all required dependencies.
