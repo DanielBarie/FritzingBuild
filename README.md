@@ -1,6 +1,8 @@
 # FritzingBuild
 Building Fritzing with Ubuntu 22.04 LTS
 
+Please don't ask for binaries.
+
 Quite an expensive process figuring this out, about €1000 when taking my hourly wage. At least I've dusted off my software build skills. Repeated builds will of course be cheaper...
 ![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/e97830fd-37e5-4151-91bf-8deac4182c02)
 ![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/6673ce88-e0bf-4592-9234-d20469ed429b)
