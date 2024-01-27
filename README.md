@@ -210,6 +210,12 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
  - result will be found in `~/ngspice-42/releasesh/src/.libs` (`libngspice.a`), approx. 18MB, don't worry about failed install (can't write to system dirs without sufficient privileges, obviously...)
 
 ## Do Clipping Library Build (static)
+- get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
+- `mkdir Clipper1`, UPPERCASE!
+- `mv clipper_ver6.4.2.zip Clipper1`
+- `cd Clipper1`
+- unzip
+- `cd cpp`
 - change `cpp/CMakeLists.txt`:
 	- find
  		```
@@ -221,8 +227,14 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
    		SET(BUILD_SHARED_LIBS OFF CACHE BOOL
     		"Don't Build shared libraries (.dll/.so) instead of static ones (.lib/.a)")
 		```  
-  - 
+- `mkdir build-dir`
+- `cd build-dir`
+- `cmake ..`
+- `make`
+- Indicator of success: watch for ```[100%] Linking CXX static library libpolyclipping.a```
+- library file will be in `~/Clipper1/cpp/build-dir`
 
+  
 # Build Release
 Build releasable compressed file containing (to be done) all required dependencies.
 The release script will clone the parts repo and include it.
