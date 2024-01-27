@@ -137,7 +137,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 	- Go to directory: `cd qt-everywhere-src-6.6.1`  
   - ```./configure -qt-zlib```
   - ```cmake --build . --parallel```
-  - optional: ```sudo cmake --install .``` will install to /usr/local/Qt-6.6.1
+  - ```sudo cmake --install .``` will install to /usr/local/Qt-6.6.1 (need this for qmake) but could also set path to point into the build directory...
   - ```apt-get install qtchooser```
   - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
   - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
