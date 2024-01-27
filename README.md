@@ -11,7 +11,7 @@ Quite an expensive process figuring this out, about €1000 when taking my hourl
 # What?
 Obviously building Fritzing for teaching purposes. The goal is having a release and building a VM for students to explore electrical circuits and their simulation using Fritzing.
 
-We'll build with the latest (as of writing) version of Qt which is 6.6.1. For the brave: Download any version greater than 6.5.2 (minimum requirement for Fritzing) at https://download.qt.io/archive/qt/
+We'll build with the latest (as of writing) version of Qt which is 6.6.1. For the brave: Download any version greater than 6.5.2 (minimum requirement for Fritzing) at https://download.qt.io/archive/qt/ Please be advised to change paths accordingly.
 
 Compilation will give some deprecation warnings regarding Qt functions. Will work anyway, we'll maybe have to re-visit this if Qt remove/change these functions.
 
