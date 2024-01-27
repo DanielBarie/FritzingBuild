@@ -73,7 +73,12 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 	- ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libdrm-dev libgles2-mesa-dev pkg-config```
 - get and untar Boost:
 	- ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
- 	- ```tar xzvf boost_1_84_0.tar.gz``` 	
+ 	- ```tar xzvf boost_1_84_0.tar.gz```
+
+
+# This is where the common part stops
+Below steps are for shared libs / dynamic linking and in wrong order (must build Qt before quazip)
+
 - do libgit build or install `sudo apt-get install libgit2-dev` and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
    - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
    - untar
@@ -234,6 +239,21 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - Indicator of success: watch for ```[100%] Linking CXX static library libpolyclipping.a```
 - library file will be in `~/Clipper1/cpp/build-dir`
 
+# DO quazip build (static)
+- `sudo apt-get install zlib1g-dev libbz2-dev`
+- `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
+- untar
+- rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
+- `cd quazip-6.6.1-1.4`
+- edit `CMakeLists.txt`
+	- find (in the else case, not EMSCRIPTEN) `option(BUILD_SHARED_LIBS "" OFF)`
+ 	- change to `option(BUILD_SHARED_LIBS "" ON)`
+  	- while you're at it, you may also disable the install (next line)
+- `cd build-dir`
+- cmake needs to be called with path to qt6 files: `cmake -S .. -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/opt/Qt6.6.1/lib/cmake"`
+- `cmake --build .`
+- indicator of success: look for ```[100%] Linking CXX static library libquazip1-qt6.a```
+- library (`libquazip1-qt6.a`) will be in `~/quazip-6.6.1-1.4/build-dir/quazip`
   
 # Build Release
 Build releasable compressed file containing (to be done) all required dependencies.
