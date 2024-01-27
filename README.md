@@ -159,8 +159,8 @@ or install shared lib devel package (https://packages.ubuntu.com/search?keywords
    	- change QT_MOST to 6.6.10 (or whatever is sufficiently high)
   - change boost detect script (will only accept up to 81)
     - ```nano ./fritzing-app/pri/boostdetect.pri```
-   	- find 81
-   	- change to 84
+   	- find `BOOSTS = 81`
+   	- change to `BOOSTS = 84`
   - fix ngspice detection (will not set correct include dir)
    	- include must point to `../ngspice-40/src/include`but instead only points to `ngspice-40/include`
    	- `nano ./pri/spicedetect.pri`
