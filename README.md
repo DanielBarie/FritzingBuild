@@ -81,7 +81,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
    - `mkdir build && cd build`
    - `cmake ..`
    - `cmake --build . --parallel`
- - do spiceng build
+ - do spiceng build or install shared lib devel package (https://packages.ubuntu.com/search?keywords=ngspice ngspice-dev) and skip steps below
    - get sources from https://ngspice.sourceforge.io/download.html
    - unzip
    - ```apt-get install libxaw7-dev```
@@ -197,7 +197,11 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
  - `cmake ..`
  - `cmake --build . --parallel`
  - optional: check for `libgit2.a` being present in build dir `ls -lsah libgit2.a`
-   
+
+## Do spiceng build (static)
+- `sudo apt-get install libxaw7-dev`
+- `./configure -enable-static`
+- `make -j`
 
 # Build Release
 Build releasable compressed file containing (to be done) all required dependencies.
@@ -216,7 +220,9 @@ Minimum required dependencies / packages if not statically linked.
 - libgit2:
 	- for Ubuntu, see https://packages.ubuntu.com/search?searchon=sourcenames&keywords=libgit2 for required package
 	- Jammy (22.04 LTS): `sudo apt-get install libgit2-1.1`
-
+- libngspice:
+	- https://packages.ubuntu.com/search?keywords=ngspice
+ 	- Jammy (22.04 LTS): `sudo apt-get install libngspice0`
 # FAQ
 ## Complains about missing libgit2.so.1.7 (or any other shared library)
 Error message: ```<our installation dir>/lib/Fritzing: error while loading shared libraries: libgit2.so.1.7: cannot open shared object file: No such file or directory```.   
