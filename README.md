@@ -200,7 +200,11 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 
 ## Do spiceng build (static)
 - `sudo apt-get install libxaw7-dev`
-- `./configure -enable-static`
+- no: `./configure -enable-static`
+- edit `configure.ac`
+	- line # 481: replace `AC_SUBST([STATIC], [-shared])` with `AC_SUBST([STATIC], [-static])` as per https://sourceforge.net/p/ngspice/discussion/127605/thread/2216ffc5/
+ - line 634: change `` to static
+ - line 636 change to static and include lib ver
 - `make -j`
 
 # Build Release
