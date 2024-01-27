@@ -254,7 +254,18 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - `cmake --build .`
 - indicator of success: look for ```[100%] Linking CXX static library libquazip1-qt6.a```
 - library (`libquazip1-qt6.a`) will be in `~/quazip-6.6.1-1.4/build-dir/quazip`
-  
+
+# Do SVGPP Library Build 
+Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
+- `git clone https://github.com/svgpp/svgpp.git`
+- `sudo apt-get install libxml2-dev`
+- `mv svgpp svgpp-1.3.0`
+- `cd svgpp-1.3.0`
+- `mkdir build-dir`
+- `cd build-dir`
+- `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
+- `make -j` (go fast)
+
 # Build Release
 Build releasable compressed file containing (to be done) all required dependencies.
 The release script will clone the parts repo and include it.
