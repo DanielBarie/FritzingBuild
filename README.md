@@ -135,10 +135,10 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
   - ```./configure -qt-zlib```
   - ```cmake --build . --parallel```
   - optional: ```sudo cmake --install .```will install to /usr/local/Qt-6.6.1
- 	- ```apt-get install qtchooser```
+	- ```apt-get install qtchooser```
  	- ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
  	- ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
- 	`
+- Prepare and do Fritzing build
  	- ```git clone https://github.com/fritzing/fritzing-app.git```
  	- ```git clone https://github.com/fritzing/fritzing-parts```
  - change compile script (phoenix.pro):
