@@ -67,9 +67,9 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
   - ```apt-get upgrade```
   - ```apt-get install build-essential git cmake libssl-dev libudev-dev```
 - prepare for build, assuming you're happy to build below your user home dir
- - ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev```
- - ```apt-get install libdrm-dev libgles2-mesa-dev```
- - ```apt-get install pkg-config```
+	- ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev```
+ 	- ```apt-get install libdrm-dev libgles2-mesa-dev```
+ 	- ```apt-get install pkg-config```
 - get and untar Boost:
 	- ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
  	- ```tar xzvf boost_1_84_0.tar.gz`` 	
