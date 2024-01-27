@@ -203,8 +203,9 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - no: `./configure -enable-static`
 - edit `configure.ac`
 	- line # 481: replace `AC_SUBST([STATIC], [-shared])` with `AC_SUBST([STATIC], [-static])` as per https://sourceforge.net/p/ngspice/discussion/127605/thread/2216ffc5/
- - line 634: change `` to static
- - line 636 change to static and include lib ver
+ - edit `~ngspice/src/makefile.am`
+ 	- line 634: change `` to static
+ 	- line 636 change to static and include lib ver
  - `./compile_linux_shared.sh 64`
  - result will be found in `~/ngspice-42/releasesh/src/.libs` (`libngspice.a`), approx. 18MB, don't worry about failed install (can't write to system dirs without sufficient privileges, obviously...)
 - 
