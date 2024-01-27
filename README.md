@@ -196,6 +196,8 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
 ## Do libgit2 Build (static)
+either do wget or git pull of  https://github.com/libgit2/libgit2/pull/6471
+wget way below
 - `cd ~`
 - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
 - `tar xzvf v1.7.1.tar.gz`
@@ -206,6 +208,7 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
  - `cmake ..`
  - `cmake --build . --parallel`
  - optional: check for `libgit2.a` being present in build dir `ls -lsah libgit2.a`
+ - lib will be in `~/libgit2-1.7.1/build
 
 ## Do spiceng Build (static)
 - get source, unzip (version 42)
@@ -297,6 +300,10 @@ Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
    	- `nano pri/quazipdetect.pri`
    	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
    	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/build-dir/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
+- fix libgit detect script:
+	- `nano pri/libgit2detect.pri`
+ 	- comment out conditional for including static lib, just set `LIBGITSTATIC = true`
+ 	- change `LIBGIT2LIB = $$LIBGITPATH/lib` to be `LIBGIT2LIB = $$LIBGITPATH/build`
 - Test build
   - `qmake`
   - `make`
@@ -324,6 +331,7 @@ Minimum required dependencies / packages if not statically linked.
 - libngspice:
 	- https://packages.ubuntu.com/search?keywords=ngspice
  	- Jammy (22.04 LTS): `sudo apt-get install libngspice0`
+
 # FAQ
 ## Complains about missing libgit2.so.1.7 (or any other shared library)
 Error message: ```<our installation dir>/lib/Fritzing: error while loading shared libraries: libgit2.so.1.7: cannot open shared object file: No such file or directory```.   
