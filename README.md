@@ -208,6 +208,7 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
  - optional: check for `libgit2.a` being present in build dir `ls -lsah libgit2.a`
 
 ## Do spiceng Build (static)
+- get source, unzip (version 42)
 - `sudo apt-get install libxaw7-dev`
 - no: `./configure -enable-static`
 - edit `configure.ac`
@@ -269,6 +270,39 @@ Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - `cd build-dir`
 - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
 - `make -j` (go fast)
+
+## Prepare Fritzing build
+- ```git clone https://github.com/fritzing/fritzing-app.git```
+	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
+	- change compile script (phoenix.pro):
+		- allow for later versions of qt
+   	- ```nano ./fritzing-app/phoenix.pro```
+   	- change QT_MOST to 6.6.10 (or whatever is sufficiently high)
+- change boost detect script (will only accept up to 81)
+    - ```nano ./fritzing-app/pri/boostdetect.pri```
+   	- find `BOOSTS = 81`
+   	- change to `BOOSTS = 84`
+- fix ngspice detection (will not set correct include dir)
+   	- include must point to `../ngspice-42/src/include`but instead points to `ngspice-40/include`
+   	- `nano ./pri/spicedetect.pri`
+   	- find `NGSPICEPATH = ../../ngspice-40`, change to `NGSPICEPATH = ../../ngspice-42`
+   	- find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
+   	- add (e.g. below NGSPICEPATH directive): ```LIBS += -L$$absolute_path($${NGSPICEPATH}/releasesh/src/.libs) -lngspice``` 
+  - fix clipper detect script:
+   	- `nano ./pri/clipper1detect.pri`
+   	- change ```CLIPPER1 = $$absolute_path($$PWD/../../Clipper1/6.4.2)``` to be ``` CLIPPER1 = $$absolute_path($$PWD/../../Clipper1)``` (no slash!)
+   	- change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be ```LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping``` 
+   	- change ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping)``` to be ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)```
+  - fix quazip detect script:
+   	- `nano pri/quazipdetect.pri`
+   	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
+   	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
+- Test build
+  - `qmake`
+  - `make`
+- Everything ok? proceed... if not: fix
+  - `make clean`
+  - `rm Makefile*`
 
 # Build Release (dynamic linking)
 Build releasable compressed file containing (to be done) all required dependencies.
