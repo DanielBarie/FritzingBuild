@@ -47,7 +47,7 @@ We'll set up a sufficiently beefy VM and get going in there. No containerized bu
   Running m_simulator->command('reset'):
   ```
 
-# Ubuntu 22.04 Build Environment
+# Ubuntu 22.04 Build Environment, dynamically linked, Qt-zlib
 ## Get build environment up and running
 Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us (pdf components))
 - get Ubuntu 22.04 LTS
