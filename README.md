@@ -74,7 +74,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 - get and untar Boost:
 	- ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
  	- ```tar xzvf boost_1_84_0.tar.gz``` 	
-- do libgit build:
+- do libgit build or install `sudo apt-get install libgit2-dev` and skip steps below (but remember to install the package when deploying)
    - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
    - untar
    - change to libgit dir
