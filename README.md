@@ -173,10 +173,14 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
   - `rm Makefile*`
 
 # Statically linked, Qt-zlib
-- Do Qt build:
-	- Go to directory: `cd qt-everywhere-src-6.6.1`  
-  - ```./configure -static -qt-zlib```
-  - ```cmake --build . --parallel```
+Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source tree. 
+## Do Qt build
+- `cd ~/qt-build`
+- `mkdir qt-static`
+- `cd qt-static`
+- ` ../qt-everywhere-src-6.6.1/configure -static -qt-zlib -prefix /opt/Qt6.6.1`
+- optional: check config.result for appropriate configuration (X11 / Wayland platform plugins, qt-zlib = yes, shared libraries = no)
+- ```cmake --build . --parallel```
   - optional: ```sudo cmake --install .``` will install to /usr/local/Qt-6.6.1
   - ```apt-get install qtchooser```
   - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
