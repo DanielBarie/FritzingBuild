@@ -33,6 +33,7 @@ When focusing on LTS, we might as well take Debian Bookworm (five years from mid
 We'll set up a sufficiently beefy VM and get going in there. No containerized building.
 
 # To Do
+- re-structure (steps in correct ordering, first, we need to build qt, then quazip)
 - maybe create a snap or flatpack?
 - fix simulator (include lib):
   ```
