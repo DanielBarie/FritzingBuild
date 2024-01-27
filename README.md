@@ -186,6 +186,18 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - ```qtchooser -install qt6 /opt/Qt6.6.1/bin/qmake```
 - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
+## Do libgit2 build (static)
+- `cd ~`
+- `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
+- `tar xzvf v1.7.1.tar.gz`
+- `cd libgit2-1.7.1/`
+- change `CMakeLists.txt` to generate static lib
+	- change `option(BUILD_SHARED_LIBS       "Build Shared Library (OFF for Static)"                  ON)` to `option(BUILD_SHARED_LIBS       "Build Shared Library (OFF for Static)"                  OFF)`
+ - `mkdir build && cd build`
+ - `cmake ..`
+ - `cmake --build . --parallel`
+ - optional: check for `libgit2.a` being present in build dir `ls -lsah libgit2.a`
+   
 
 # Build Release
 Build releasable compressed file containing (to be done) all required dependencies.
