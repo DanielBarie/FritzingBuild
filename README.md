@@ -70,6 +70,9 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  - ```apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev```
  - ```apt-get install libdrm-dev libgles2-mesa-dev```
  - ```apt-get install pkg-config```
+- get and untar Boost:
+	- ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
+ 	- ```tar xzvf boost_1_84_0.tar.gz`` 	
 - do libgit build:
    - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
    - untar
@@ -127,22 +130,17 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
   - untar the sources: `tar xf...` takes a while in silence...
   
 ## Dynamically linked, Qt-zlib
- - do qt build:
-
- 
-   - go to directory
-   - ```./configure -qt-zlib```
-   - ```cmake --build . --parallel```
-   - ```sudo cmake --install .```will install to /usr/local/Qt-6.6.1
- 
-   - 
- - ```apt-get install qtchooser```
- - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
- - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
- - ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
- - ```tar xzvf boost_1_84_0.tar.gz```
- - ```git clone https://github.com/fritzing/fritzing-app.git```
- - ```git clone https://github.com/fritzing/fritzing-parts```
+- Do Qt build:
+	- Go to directory: `cd qt-everywhere-src-6.6.1`
+  - ```./configure -qt-zlib```
+  - ```cmake --build . --parallel```
+  - optional: ```sudo cmake --install .```will install to /usr/local/Qt-6.6.1
+ 	- ```apt-get install qtchooser```
+ 	- ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
+ 	- ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
+ 	`
+ 	- ```git clone https://github.com/fritzing/fritzing-app.git```
+ 	- ```git clone https://github.com/fritzing/fritzing-parts```
  - change compile script (phoenix.pro):
    - allow for later versions of qt
    - ```nano ./fritzing-app/phoenix.pro```
