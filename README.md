@@ -46,11 +46,12 @@ We'll set up a sufficiently beefy VM and get going in there. No containerized bu
   "Could not find ngspice."
   Running m_simulator->command('reset'):
   ```
-- 
+
+# Ubuntu 22.04 Build Environment
 ## Get build environment up and running
-Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us)
+Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us (pdf components))
 - get Ubuntu 22.04 LTS
-- create vm (qt build will take approx 7 minutes)
+- create VM (Qt build will take approx 7 minutes with below resource configuration, AMD Epyc at 2.3GHz)
   - 128 GB disk space (SSD) (Qt build takes approx. 32 GB)
   - 262144 MB RAM (64GB will be ok, too)
   - 64 cores (if you have some to spare, hand them over...main issue is qt compilation, get the binaries if in a hurry)
