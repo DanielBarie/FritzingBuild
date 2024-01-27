@@ -200,6 +200,10 @@ The release script will clone the parts repo and include it.
 - There's a modified version of the release script in this repo which copies over some (see spiceng) dependencies. Please be aware that the paths to these dependencies are hard-coded for Qt 6.6.1 (and above build paths (qt-build)).
 
 # Deploy Release
+Minimum required dependencies / packages if not statically linked.
+- libgit2:
+	- for Ubuntu, see https://packages.ubuntu.com/search?searchon=sourcenames&keywords=libgit2 for required package
+	- Jammy (22.04 LTS): `sudo apt-get install libgit2-1.1`
 
 # FAQ
 ## Complains about missing libgit2.so.1.7 (or any other shared library)
