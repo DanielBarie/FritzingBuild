@@ -392,10 +392,10 @@ Why would someone do that?
 ```
 
 # Additional Reading:
-Things to remember when compiling/linking C/C++ software
+Things to remember when compiling/linking C/C++ software  
 https://gist.github.com/gubatron/32f82053596c24b6bec6?permalink_comment_id=2575013
 
-And Pros and Cons of static and dynamic linking:
+And Pros and Cons of static and dynamic linking:  
 https://stackoverflow.com/questions/26103966/how-can-i-statically-link-standard-library-to-my-c-program
 
 
