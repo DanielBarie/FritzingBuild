@@ -181,10 +181,10 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 - ` ../qt-everywhere-src-6.6.1/configure -static -qt-zlib -prefix /opt/Qt6.6.1`
 - optional: check config.result for appropriate configuration (X11 / Wayland platform plugins, qt-zlib = yes, shared libraries = no)
 - ```cmake --build . --parallel```
-  - optional: ```sudo cmake --install .``` will install to /usr/local/Qt-6.6.1
-  - ```apt-get install qtchooser```
-  - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
-  - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
+- ```sudo cmake --install .``` will install to /opt/Qt6.6.1
+- ```apt-get install qtchooser```
+- ```qtchooser -install qt6 /opt/qt6.6.1/bin/qmake```
+- ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
 
 # Build Release
