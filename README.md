@@ -129,7 +129,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
   - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
   - untar the sources: `tar xf...` takes a while in silence...
   
-## Dynamically linked, Qt-zlib
+# Dynamically linked, Qt-zlib
 - Do Qt build:
 	- Go to directory: `cd qt-everywhere-src-6.6.1`
   - ```./configure -qt-zlib```
@@ -140,36 +140,36 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  	- ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 - Prepare and do Fritzing build
  	- ```git clone https://github.com/fritzing/fritzing-app.git```
- 	- ```git clone https://github.com/fritzing/fritzing-parts```
- - change compile script (phoenix.pro):
-   - allow for later versions of qt
-   - ```nano ./fritzing-app/phoenix.pro```
-   - change QT_MOST to 6.6.10 (or whatever is sufficiently high)
- - change boost detect script (will only accept up to 81)
-   - ```nano ./fritzing-app/pri/boostdetect.pri```
-   - find 81
-   - change to 84
- - fix ngspice detection (will not set correct include dir)
-   - include must point to `../ngspice-40/src/include`but instead only points to `ngspice-40/include`
-   - `nano ./pri/spicedetect.pri`
-   - find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
- - fix clipper detect script:
-   - `nano ./pri/clipper1detect.pri`
-   - change ```CLIPPER1 = $$absolute_path($$PWD/../../Clipper1/6.4.2)``` to be ``` CLIPPER1 = $$absolute_path($$PWD/../../Clipper1)``` (no slash!)
-   - change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be ```LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping``` 
-   - change ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping)``` to be ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)```
- - fix quazip detect script:
-   - `nano pri/quazipdetect.pri`
-   - change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
-   - change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
- - test build
-   - `qmake`
-   - `make`
-   - everything ok? proceed... if not: fix
-   - `make clean`
-   - `rm Makefile*`
+ 	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
+	- change compile script (phoenix.pro):
+		- allow for later versions of qt
+   	- ```nano ./fritzing-app/phoenix.pro```
+   	- change QT_MOST to 6.6.10 (or whatever is sufficiently high)
+ 	- change boost detect script (will only accept up to 81)
+		- ```nano ./fritzing-app/pri/boostdetect.pri```
+   	- find 81
+   	- change to 84
+ 	- fix ngspice detection (will not set correct include dir)
+   	- include must point to `../ngspice-40/src/include`but instead only points to `ngspice-40/include`
+   	- `nano ./pri/spicedetect.pri`
+   	- find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
+ 	- fix clipper detect script:
+   	- `nano ./pri/clipper1detect.pri`
+   	- change ```CLIPPER1 = $$absolute_path($$PWD/../../Clipper1/6.4.2)``` to be ``` CLIPPER1 = $$absolute_path($$PWD/../../Clipper1)``` (no slash!)
+   	- change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be ```LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping``` 
+   	- change ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping)``` to be ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)```
+ 	- fix quazip detect script:
+   	- `nano pri/quazipdetect.pri`
+   	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
+   	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
+	- test build
+  	- `qmake`
+   	- `make`
+	- everything ok? proceed... if not: fix
+   	- `make clean`
+   	- `rm Makefile*`
 
-## Build Release
+# Build Release
 Build releasable compressed file containing (to be done) all required dependencies.
 The release script will clone the parts repo and include it.
 
@@ -181,7 +181,7 @@ The release script will clone the parts repo and include it.
 - `tar -cjf  ./1.0.2b_develop_private.tar.bz2 fritzing-1.0.2b_develop_private.linux.AMD64`: Won't create compressed file because we're not running Travis-CI.
 - There's a modified version of the release script in this repo which copies over some (see spiceng) dependencies. Please be aware that the paths to these dependencies are hard-coded for Qt 6.6.1 (and above build paths (qt-build)).
 
-## Deploy Release
+# Deploy Release
 
 # FAQ
 ## Complains about missing libgit2.so.1.7 (or any other shared library)
