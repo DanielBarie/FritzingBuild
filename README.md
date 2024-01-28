@@ -122,6 +122,7 @@ or install shared lib devel package (https://packages.ubuntu.com/search?keywords
    - ```./configure```
    - ```make```
    - rename directory to `ngspice-40`
+
 When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_64-linux-gnu/libngspice.so.0 libngspice.so` in the `lib` subdir of your Fritzing installation. This actually is the preferred way.
 
  ## get/compile quazip
@@ -215,6 +216,8 @@ Install libgit2-dev and libgit2
  	- line 636 change to static and include lib ver
  - `./compile_linux_shared.sh 64`
  - result will be found in `~/ngspice-42/releasesh/src/.libs` (`libngspice.a`), approx. 18MB, don't worry about failed install (can't write to system dirs without sufficient privileges, obviously...)
+
+For whatever reason (I haven't been able to figure out, yet), the library gets linked statically but Fritzing still complains about not having access to the shared version of it. ldd doesn't show any symbols for SPICE, so it must have been included statically. But wth... There still is one thing left to check: Simulation src in Fritzing code. 
 
 ## Do Clipping Library Build (static)
 - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
