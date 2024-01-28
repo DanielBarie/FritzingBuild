@@ -616,7 +616,7 @@ Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
 - `make -j` (go fast)
 
-## Release Build works, but stops at building database (no output)
+## Release Build works, but stops at building database (no output)?
 You're probably building on a machine without GUI or via a console connection. 
 There probably is some sort of error in the parts repository. With the current git version 1.0.2b there's an error in a part.  
 This will cause an error message to be displayed.  
@@ -625,6 +625,59 @@ This will cause an error message to be displayed.
 
 That only works when a GUI is available. We've set the platform to be `offscreen`. So we're now in a situation where there is an error message we can't see. 
 Solution: Get the command line used to launch the database build (`ps -ef`, copy it some place). Kill the process, launch it with a working graphical display. You may then acknowledge the error, the database build will continue. Tar/bzip2 manually.
+
+## What are the dependencies of the static build (X11)?
+```
+linux-vdso.so.1 (0x00007ffd103f8000)
+libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f2120d8a000)
+libpcre.so.3 => /lib/x86_64-linux-gnu/libpcre.so.3 (0x00007f2120d14000)
+libbz2.so.1.0 => /lib/x86_64-linux-gnu/libbz2.so.1.0 (0x00007f2120d01000)
+libssl.so.3 => /lib/x86_64-linux-gnu/libssl.so.3 (0x00007f211e35c000)
+libcrypto.so.3 => /lib/x86_64-linux-gnu/libcrypto.so.3 (0x00007f211de00000)
+libxkbcommon-x11.so.0 => /lib/x86_64-linux-gnu/libxkbcommon-x11.so.0 (0x00007f2120cf4000)
+libxcb-cursor.so.0 => /lib/x86_64-linux-gnu/libxcb-cursor.so.0 (0x00007f211da00000)
+libxcb-icccm.so.4 => /lib/x86_64-linux-gnu/libxcb-icccm.so.4 (0x00007f2120ced000)
+libxcb-image.so.0 => /lib/x86_64-linux-gnu/libxcb-image.so.0 (0x00007f2120ce7000)
+libxcb-keysyms.so.1 => /lib/x86_64-linux-gnu/libxcb-keysyms.so.1 (0x00007f2120ce2000)
+libxcb-randr.so.0 => /lib/x86_64-linux-gnu/libxcb-randr.so.0 (0x00007f2120ccf000)
+libxcb-render-util.so.0 => /lib/x86_64-linux-gnu/libxcb-render-util.so.0 (0x00007f2120cc6000)
+libxcb-shm.so.0 => /lib/x86_64-linux-gnu/libxcb-shm.so.0 (0x00007f2120cc1000)
+libxcb-sync.so.1 => /lib/x86_64-linux-gnu/libxcb-sync.so.1 (0x00007f211e352000)
+libxcb-xfixes.so.0 => /lib/x86_64-linux-gnu/libxcb-xfixes.so.0 (0x00007f211e348000)
+libxcb-render.so.0 => /lib/x86_64-linux-gnu/libxcb-render.so.0 (0x00007f211e339000)
+libxcb-shape.so.0 => /lib/x86_64-linux-gnu/libxcb-shape.so.0 (0x00007f211e334000)
+libxcb-xkb.so.1 => /lib/x86_64-linux-gnu/libxcb-xkb.so.1 (0x00007f211e316000)
+libSM.so.6 => /lib/x86_64-linux-gnu/libSM.so.6 (0x00007f211e30b000)
+libICE.so.6 => /lib/x86_64-linux-gnu/libICE.so.6 (0x00007f211e2ee000)
+libxcb-glx.so.0 => /lib/x86_64-linux-gnu/libxcb-glx.so.0 (0x00007f211e2d1000)
+libdrm.so.2 => /lib/x86_64-linux-gnu/libdrm.so.2 (0x00007f211e2bb000)
+libX11-xcb.so.1 => /lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007f211e2b6000)
+libxcb.so.1 => /lib/x86_64-linux-gnu/libxcb.so.1 (0x00007f211e28c000)
+libEGL.so.1 => /lib/x86_64-linux-gnu/libEGL.so.1 (0x00007f211e279000)
+libfreetype.so.6 => /lib/x86_64-linux-gnu/libfreetype.so.6 (0x00007f211dd38000)
+libfontconfig.so.1 => /lib/x86_64-linux-gnu/libfontconfig.so.1 (0x00007f211dcee000)
+libX11.so.6 => /lib/x86_64-linux-gnu/libX11.so.6 (0x00007f211d8c0000)
+libxkbcommon.so.0 => /lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007f211dca7000)
+libbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x00007f211e269000)
+libudev.so.1 => /lib/x86_64-linux-gnu/libudev.so.1 (0x00007f211dc7d000)
+libGLX.so.0 => /lib/x86_64-linux-gnu/libGLX.so.0 (0x00007f211dc49000)
+libOpenGL.so.0 => /lib/x86_64-linux-gnu/libOpenGL.so.0 (0x00007f211dc1d000)
+libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f211d600000)
+libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f211d519000)
+libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f211e247000)
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f211d200000)
+/lib64/ld-linux-x86-64.so.2 (0x00007f2120db7000)
+libxcb-util.so.1 => /lib/x86_64-linux-gnu/libxcb-util.so.1 (0x00007f211dc14000)
+libuuid.so.1 => /lib/x86_64-linux-gnu/libuuid.so.1 (0x00007f211dc0b000)
+libbsd.so.0 => /lib/x86_64-linux-gnu/libbsd.so.0 (0x00007f211d8a8000)
+libXau.so.6 => /lib/x86_64-linux-gnu/libXau.so.6 (0x00007f211d8a2000)
+libXdmcp.so.6 => /lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007f211d89a000)
+libGLdispatch.so.0 => /lib/x86_64-linux-gnu/libGLdispatch.so.0 (0x00007f211d461000)
+libpng16.so.16 => /lib/x86_64-linux-gnu/libpng16.so.16 (0x00007f211d85f000)
+libexpat.so.1 => /lib/x86_64-linux-gnu/libexpat.so.1 (0x00007f211d82e000)
+libbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007f211d43e000)
+libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x00007f211d431000)
+```
 
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
