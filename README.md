@@ -681,7 +681,9 @@ libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x00007f211d431000)
 ```
 
 ## The Simulator isn't available?
-In Release builds, you need to activate it ,first.
+![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/2d124bdc-7271-451e-a7b2-21252793f6fa)
+
+In Release builds, you need to activate it.
 Go to Edit -> Settings -> Beta Features, set checkbox.
 ![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/3e9c4139-41ad-4271-81ab-a8c06a9b4954)  
 
