@@ -244,7 +244,6 @@ for dynamic linking, see other instructions
 ## Install svgpp
 `sudo apt-get install dvgpp-dev`
 
-
 ## Prepare Fritzing build
 - ```git clone https://github.com/fritzing/fritzing-app.git```
 	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
@@ -282,8 +281,6 @@ for dynamic linking, see other instructions
 - Everything ok? proceed... if not: fix
   - `make clean`
   - `rm Makefile*`
-
-## Currently Stuck at linking
 
 
 # Build Release (dynamic linking)
