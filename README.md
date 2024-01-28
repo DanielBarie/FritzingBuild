@@ -627,6 +627,7 @@ That only works when a GUI is available. We've set the platform to be `offscreen
 Solution: Get the command line used to launch the database build (`ps -ef`, copy it some place). Kill the process, launch it with a working graphical display. You may then acknowledge the error, the database build will continue. Tar/bzip2 manually.
 
 ## What are the dependencies of the static build (X11)?
+Only standard libraries, no Qt or SpiceNG.
 ```
 linux-vdso.so.1 (0x00007ffd103f8000)
 libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f2120d8a000)
