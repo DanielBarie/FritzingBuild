@@ -539,6 +539,22 @@ Quick and dirty fix:
 - edit phoenix.pro
 	- add `QMAKE_LFLAGS += -Wl,--start-group` at the top of the file. Will instruct the linker to sort out circular references, it will complain about a missing `--end-group` but will add that automatically at the end.
 
+## Platform Plugin Errors when building Fritzing Release
+The release script will build the parts database. For this, Fritzing will be launched with `-db` parameter. Since your (at least mine) development machine probably doesn't have a graphical user interface installed (also the case when you're building over ssh / remote shell), the platform plugin is set to be `minimal` or `offscreen` (in our version of the release script). This of course needs to be linked into the binary (when doing a static build) or available in the `platforms` directory (dynamic linking or static when having built Qt with default parameters, which will be pulled automatically from your build machine config).
+```
+qt.qpa.plugin: Could not find the Qt platform plugin "minimal" in ""
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+Available platform plugins are: xcb.
+
+Aborted (core dumped)
+```  
+
+Solutions are to  
+
+ - either do a Qt build with platform parameters specified explicitly (https://forum.qt.io/topic/105059/static-qt-build-with-multiple-qpa-plugins/3) 
+ - or provide the necessary plugins in the `platforms` directory of the release
+
 ## libgit2 Build (static)
 either do wget or git pull of  https://github.com/libgit2/libgit2/pull/6471
 wget way below
