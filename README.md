@@ -571,6 +571,15 @@ wget way below
 - indicator of success: look for ```[100%] Linking CXX static library libquazip1-qt6.a```
 - library (`libquazip1-qt6.a`) will be in `~/quazip-6.6.1-1.4/build-dir/quazip`
 
+## Static Quazip Build complaining about missing BZ_ symbols:
+We obviously forgot to specify the bz2 lib when linking.
+Find and include it:
+- `dpkg -l | grep bz2` (find package name, if we previously installed it)
+- if empty: install: `sudo apt-get install libbz2-1.0`
+- `dpkg -L libbz2-dev | grep bz2` for location
+- include location when linking (Ubuntu 22.04): add `-L /usr/lib/x86_64-linux-gnu -l bz2` in quazipdetect.pri
+- https://stackoverflow.com/questions/12718126/how-do-i-enforce-the-order-of-qmake-library-dependencies
+- 
 ## Static SVGPP Library Build 
 Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - `git clone https://github.com/svgpp/svgpp.git`
