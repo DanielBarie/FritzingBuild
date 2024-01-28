@@ -238,10 +238,10 @@ Install libgit2-dev and libgit2
 - Indicator of success: watch for ```[100%] Linking CXX static library libpolyclipping.a```
 - library file will be in `~/Clipper1/cpp/build-dir`
 
-# Do Quazip Build
+## Do Quazip Build
 for dynamic linking, see other instructions
 
-# Install svgpp
+## Install svgpp
 `sudo apt-get install dvgpp-dev`
 
 
