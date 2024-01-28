@@ -112,6 +112,7 @@ or install `sudo apt-get install libgit2-dev` and skip steps below (but remember
    - `mkdir build && cd build`
    - `cmake ..`
    - `cmake --build . --parallel`
+ 
  ## do spiceng build 
 or install shared lib devel package (https://packages.ubuntu.com/search?keywords=ngspice ngspice-dev) and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
    - get sources from https://ngspice.sourceforge.io/download.html
@@ -121,6 +122,8 @@ or install shared lib devel package (https://packages.ubuntu.com/search?keywords
    - ```./configure```
    - ```make```
    - rename directory to `ngspice-40`
+When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_64-linux-gnu/libngspice.so.0 libngspice.so` in the `lib` subdir of your Fritzing installation. This actually is the preferred way.
+
  ## get/compile quazip
    - `sudo apt-get install zlib1g-dev libbz2-dev`
    - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
