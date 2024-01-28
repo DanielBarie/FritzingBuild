@@ -680,6 +680,13 @@ libbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007f211d
 libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x00007f211d431000)
 ```
 
+## The Simulator isn't available?
+In Release builds, you need to activate it ,first.
+Go to Edit -> Settings -> Beta Features, set checkbox.
+![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/3e9c4139-41ad-4271-81ab-a8c06a9b4954)  
+
+You might want to set the Gerber checkbox as well.
+
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
 https://gist.github.com/gubatron/32f82053596c24b6bec6?permalink_comment_id=2575013
