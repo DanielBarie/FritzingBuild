@@ -556,8 +556,8 @@ Aborted (core dumped)
 
 Solutions are to  
 
- - either do a Qt build with platform parameters specified explicitly (https://forum.qt.io/topic/105059/static-qt-build-with-multiple-qpa-plugins/3) 
- - or provide the necessary plugins in the `platforms` directory of the release
+ - either do a Qt build with platform parameters specified explicitly (https://forum.qt.io/topic/105059/static-qt-build-with-multiple-qpa-plugins/3), we do this with our custom `phoenix.pro`
+ - or provide the necessary plugins in the `platforms` directory of the release (same as for dynamic linking)
 
 ## libgit2 Build (static)
 either do wget or git pull of  https://github.com/libgit2/libgit2/pull/6471
@@ -615,6 +615,16 @@ Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - `cd build-dir`
 - `cmake -D BOOST_ROOT=../../boost_1_84_0 ../src` (perfectly happy generating GNU makefile)
 - `make -j` (go fast)
+
+## Release Build works, but stops at building database (no output)
+You're probably building on a machine without GUI or via a console connection. 
+There probably is some sort of error in the parts repository. With the current git version 1.0.2b there's an error in a part.  
+This will cause an error message to be displayed.  
+
+![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/9016ddfc-0347-4d56-8b29-d1dbf967e04a)   
+
+That only works when a GUI is available. We've set the platform to be `offscreen`. So we're now in a situation where there is an error message we can't see. 
+Solution: Get the command line used to launch the database build (`ps -ef`, copy it some place). Kill the process, launch it with a working graphical display. You may then acknowledge the error, the database build will continue. Tar/bzip2 manually.
 
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
