@@ -275,6 +275,10 @@ for dynamic linking, see other instructions
 	- `nano pri/libgit2detect.pri`
  	- comment out conditional for including static lib, just set `LIBGITSTATIC = true`
  	- change `LIBGIT2LIB = $$LIBGITPATH/lib` to be `LIBGIT2LIB = $$LIBGITPATH/build`
+- edit project file for platform plugin inclusion:
+	- `nano phoenix.pro`
+ 	- in unix!macx section, below `LIBS += -lz` add new line `QTPLUGIN.platforms = qminimal qxcb qoffscreen qwayland qvnc`
+  	- see: https://doc.qt.io/qt-6/qpa.html
 - Test build
   - `qmake`
   - `make`
