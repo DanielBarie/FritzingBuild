@@ -543,6 +543,15 @@ Quick and dirty fix:
 - edit phoenix.pro
 	- add `QMAKE_LFLAGS += -Wl,--start-group` at the top of the file. Will instruct the linker to sort out circular references, it will complain about a missing `--end-group` but will add that automatically at the end.
 
+Proper fix would be re-odering. Now there's:
+```
+-L /home/daniel/quazip-6.6.1-1.4/build-dir/quazip -lbz2 -L/home/daniel/quazip-6.6.1-1.4 -lquazip1-qt6 
+```
+Should be (-lbz2 after quazip because quazip depends on bz2:
+```
+-L /home/daniel/quazip-6.6.1-1.4/build-dir/quazip -L/home/daniel/quazip-6.6.1-1.4 -lquazip1-qt6  -lbz2
+```
+
 ## Platform Plugin Errors when building Fritzing Release
 The release script will build the parts database. For this, Fritzing will be launched with `-db` parameter. Since your (at least mine) development machine probably doesn't have a graphical user interface installed (or available when you're building over ssh / remote shell), the platform plugin is set to be `minimal` or `offscreen` (in our version of the release script). This of course needs to be linked into the binary (when doing a static build) or available in the `platforms` directory (dynamic linking or static when having built Qt with default parameters, which will be pulled automatically from your build machine config).
 ```
