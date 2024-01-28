@@ -538,7 +538,9 @@ g++ -Wl,-O1 -Wl,-rpath,/home/daniel/quazip-6.6.1-1.4 -Wl,-rpath,/home/daniel/Cli
 ```
 This specifies libgit2 before `/opt/Qt6.6.1/lib/libQt6BundledPcre2.a`. Can't be the reason (correct order, required symbols first, then lib providing these)... Fix order of linking. Can be seen in the Makefile, there's a ton of Qt PRIs, then there are the fritzing PRIs, then Qt PRI's... Haven't had the time to figure this out, yet.
 
-## Quazip static build
+Quick and dirty fix:
+- edit phoenix.pro
+	- add `QMAKE_LFLAGS += -Wl,--start-group` at the top of the file. Will instruct the linker to sort out circular references, it will complain about a missing `--end-group` but will add that automatically at the end.
 
 ## libgit2 Build (static)
 either do wget or git pull of  https://github.com/libgit2/libgit2/pull/6471
@@ -554,8 +556,11 @@ wget way below
  - `cmake --build . --parallel`
  - optional: check for `libgit2.a` being present in build dir `ls -lsah libgit2.a`
  - lib will be in `~/libgit2-1.7.1/build
+ - edit `pri/libgit2detect.pri`
+ 	- in unix branch, static case, change `LIBS += $$LIBGIT2LIB/libgit2.a -lssl -lcrypto` to be `LIBS += $$LIBGIT2LIB/libgit2.a -lssl -lcrypto -lpcre`
+  - apply quick and dirty fix (see above) to `phoenix.pro`
 
-## Static quazip Build
+## Quazip static Build
 - `sudo apt-get install zlib1g-dev libbz2-dev`
 - `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
 - untar
@@ -570,6 +575,8 @@ wget way below
 - `cmake --build .`
 - indicator of success: look for ```[100%] Linking CXX static library libquazip1-qt6.a```
 - library (`libquazip1-qt6.a`) will be in `~/quazip-6.6.1-1.4/build-dir/quazip`
+- edit `pri/quazipdetect.pri`
+	- add `LIBS += -lbz2` below `LIBS += -L $$QUAZIP_LIB_PATH/build-dir/quazip -lquazip1-qt$$QT_MAJOR_VERSION`
 
 ## Static Quazip Build complaining about missing BZ_ symbols:
 We obviously forgot to specify the bz2 lib when linking.
@@ -579,7 +586,8 @@ Find and include it:
 - `dpkg -L libbz2-dev | grep bz2` for location
 - include location when linking (Ubuntu 22.04): add `-L /usr/lib/x86_64-linux-gnu -l bz2` in quazipdetect.pri
 - https://stackoverflow.com/questions/12718126/how-do-i-enforce-the-order-of-qmake-library-dependencies
-- 
+- see above for adding fix for dependencies (issues when statically linking...)
+
 ## Static SVGPP Library Build 
 Build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
 - `git clone https://github.com/svgpp/svgpp.git`
