@@ -133,6 +133,9 @@ cp "${base_folder}"/qt-build/qt-everywhere-src-6.6.1/qtbase/lib/libQt6DBus* "${r
 cp "${base_folder}"/qt-build/qt-everywhere-src-6.6.1/qtbase/plugins/sqldrivers/* "${release_folder}"/lib/sqldrivers
 cp "${base_folder}"/qt-build/qt-everywhere-src-6.6.1/qtbase/plugins/platforms/* "${release_folder}"/lib/platforms
 cp "${base_folder}"/qt-build/qt-everywhere-src-6.6.1/qtbase/plugins/imageformats/* "${release_folder}"/lib/imageformats
+echo "spiceng"
+cp ~/ngspice-42/releasesh/src/.libs/libngspice.so.0.0.9 lib
+ln -s lib/libngspice.so.0.0.9 libngspice.so
 
 
 
