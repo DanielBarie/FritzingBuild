@@ -735,6 +735,8 @@ Which means we've successfully forced the library to be linked. (Still haven't f
 Add `-fopen` flag in `phoenix.pro`:
 ```
 QMAKE_CXXFLAGS += -O3 -fno-omit-frame-pointer -fopenmp
+QMAKE_LFLAGS += -fopenmp
+QMAKE_LFLAGS += -Wl,--start-group
 ``` 
 
 # Additional Reading:
