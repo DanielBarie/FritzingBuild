@@ -61,9 +61,13 @@ I went for Ubuntu because of the LTS release and because I wrongly assumed havin
 
 So having the correct version of Qt is the main issue if you want to skip building Qt yourself. You can, of course get pre-built binaries of any Qt version from the Qt site if you have/create an account.
 
-## Purely dynamic linking
+## Purely Dynamic Linking
 Sure, possible. Be prepared to copy all Qt dependencies and required libraries (git2, Quazip, Clipping).
+Which makes for a ton of dependencies to manually keep tabs on.
 
+## Purely Static Linking
+Sure, possible, see notes below.
+But you need to patch the Fritzing source for that to work.
 
 # To Do
 - re-structure (steps in correct ordering, first, we need to build qt, then quazip)
@@ -126,7 +130,15 @@ Install libgit2-dev and libgit2:
 - `./compile_linux_shared.sh`
 - Library file will be in `~/ngspice-42/releasesh/src/.libs`: `libngspice.so`
 
-
+## Do quazip Build
+- `sudo apt-get install zlib1g-dev libbz2-dev`
+- `wget https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz`
+- untar
+- Skip with modified `pri/quazipdetect.pri`: rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
+- `cd quazip-1.4`
+- `mkdir build-dir`
+- cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
+- `cmake --build ./ --parallel`
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
 Below steps are different for shared libs / dynamic linking and static linkin.
