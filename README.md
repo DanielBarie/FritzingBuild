@@ -739,6 +739,24 @@ QMAKE_CXXFLAGS += -O3 -fno-omit-frame-pointer -fopenmp
 QMAKE_LFLAGS += -fopenmp
 QMAKE_LFLAGS += -Wl,--start-group
 ``` 
+Well, now we have an executable size of approx. 249MB. And 
+```nm ./Fritzing | grep ngSpice```
+is looking great:
+```
+0000000000966210 T ngSpice_AllEvtNodes
+0000000000966100 T ngSpice_AllPlots
+00000000009672e0 T ngSpice_AllVecs
+0000000000967160 T ngSpice_Circ
+0000000000967780 T ngSpice_Command
+00000000009660f0 T ngSpice_CurPlot
+0000000000966b40 T ngSpice_Init
+00000000009661d0 T ngSpice_Init_Evt
+0000000000966020 T ngSpice_Init_Sync
+0000000000966220 T ngSpice_LockRealloc
+0000000000966000 T ngSpice_running
+00000000009673e0 T ngSpice_SetBkpt
+0000000000966240 T ngSpice_UnlockRealloc
+```
 
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
