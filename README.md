@@ -715,6 +715,9 @@ Check exports of compiled static library:
 00000000000001b0 T ngSpice_Init_Sync
 ```
 Good. 
+But then:
+`nm Fritzing | grep spice` does come up empty. Must have gone AWOL during linking.
+Maybe try -dynamic flag when linking?
 
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
