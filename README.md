@@ -209,14 +209,15 @@ Else see below for build instructions.
    	- add (e.g. below NGSPICEPATH directive): ```LIBS += -L$$absolute_path($${NGSPICEPATH}/releasesh/src/.libs) -lngspice``` 
 - fix clipper detect script:
    	- `nano ./pri/clipper1detect.pri`
-   	- change ```CLIPPER1 = $$absolute_path($$PWD/../../Clipper1/6.4.2)``` to be ``` CLIPPER1 = $$absolute_path($$PWD/../../Clipper1)``` (no slash!)
+   	- in unix branch: change ```CLIPPER1 = $$absolute_path($$PWD/../../Clipper1/6.4.2)``` to be ``` CLIPPER1 = $$absolute_path($$PWD/../../Clipper1)``` (no trailing slash!)
    	- change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be ```LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping``` 
    	- change ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping)``` to be ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)```
 - fix quazip detect script:
    	- `nano pri/quazipdetect.pri`
-   	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
-   	- change `QUAZIP_LIB_PATH=$$QUAZIP_PATH/lib` to be `QUAZIP_LIB_PATH=$$QUAZIP_PATH`
-   	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/build-dir/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
+   	- change `QUAZIP_PATH=$$absolute_path($$PWD/../../quazip-$$QT_VERSION-$$QUAZIP_VERSION)` to be `QUAZIP_PATH=$$absolute_path($$PWD/../../quazip-1.4)`
+   	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/quazip```
+   	- change `QUAZIP_LIB_PATH=$$QUAZIP_PATH/lib` to be `QUAZIP_LIB_PATH=$$QUAZIP_PATH/build-dir/quazip`
+   	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION```
 - fix libgit detect script:
 	- `nano pri/libgit2detect.pri`
  	- comment out conditional for including static lib, just set `LIBGITSTATIC = true`
