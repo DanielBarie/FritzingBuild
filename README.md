@@ -374,6 +374,9 @@ Below steps are different for shared libs / dynamic linking and static linking.
 
   
 # Dynamically linked, Qt-zlib
+Works, use [this release script](release_dyn.sh) which tries to copy over required libraries (Qt, spice, git2, quazip, clipping).
+Needs some finishing touches, see ugly fix for problems involving symbol references.
+
 ## Prepare and Do Qt Build
   - note: Be careful when re-configuring. There may be artifacts from previous builds. See https://stackoverflow.com/questions/6067271/qt-when-building-qt-from-source-how-do-i-clean-old-configure-configurations
   - note: Documentation: https://doc.qt.io/qt-6/configure-options.html section "Reconfiguring Existing Builds"
@@ -406,15 +409,15 @@ or install `sudo apt-get install libgit2-dev` and skip steps below (but remember
    - `cmake --build . --parallel`
  
  ## Do spiceng Build
-or install shared lib devel package (https://packages.ubuntu.com/search?keywords=ngspice ngspice-dev) and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
+Or install shared lib devel package (https://packages.ubuntu.com/search?keywords=ngspice ngspice-dev) and skip steps below (but remember to change lib paths for Fritzing build, remove copy instructions from release script, and install the package when deploying). When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_64-linux-gnu/libngspice.so.0 libngspice.so` in the `lib` subdir of your Fritzing installation. This actually is the preferred way.
+
 - get sources from https://ngspice.sourceforge.io/download.html
 - untar
+- rename dir: `mv ngspice-42 ngspice-40` (because of expected folder name by detect script)
 - ```sudo apt-get install libxaw7-dev```
 - change to unzip dir
 - ```./configure --with-ngshared```
 - ```make -j```
-
-When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_64-linux-gnu/libngspice.so.0 libngspice.so` in the `lib` subdir of your Fritzing installation. This actually is the preferred way.
 
  ## get/compile quazip
    - `sudo apt-get install zlib1g-dev libbz2-dev`
@@ -423,6 +426,7 @@ When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_
    - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
    - cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
    - `cmake --build ./ --parallel`
+     
 ## do clipper1 lib build
    - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
    - `mkdir Clipper1`, UPPERCASE!
@@ -469,7 +473,7 @@ When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_
   - fix quazip detect script:
    	- `nano pri/quazipdetect.pri`
    	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
-   	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
+   	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/quazip -lquazip1-qt$$QT_MAJOR_VERSION -lbz2 -lz```
 - Test build
   - `qmake`
   - `make`
@@ -481,6 +485,8 @@ When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_
 
 # Statically linked, Qt-zlib
 Well, not entirely static build. Qt, Clipping and SpiceNG will be linked statically, Quazip, svgpp and Git2 will be linked dynamically. Main reasons are: The required version of Qt is still well ahead of most distributions, there are no binaries for the Clipping library. As for SpiceNG: there are binary builds in most distributions but with lower version numbers (Ubuntu 22.04: v36). Quazip must match our version of Qt, so no luck here, either. We can't rely on binaries for most distributions. The main reason for dynamically linking this is linking issues. Same for Git2. But the Git2 library is available in most distirbutions. Same for svgpp-dev.
+
+This leads to an executable linked against (and included) libspice, but you must still provide the .so (because of the way the library is included by Fritzing). So this is somehow instructive but in the end useless..
 
 Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source tree.  
 
