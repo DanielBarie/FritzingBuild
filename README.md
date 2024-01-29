@@ -228,6 +228,12 @@ Else see below for build instructions.
   - `make clean`
   - `rm Makefile*`
 
+You're now ready for calling the release script.
+
+# Building Release
+- `cd ~/fritzing-app/tools/linux_release_script`
+- 
+
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
 Below steps are different for shared libs / dynamic linking and static linkin.
 
@@ -336,7 +342,6 @@ When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_
 - `make clean`
 - `rm Makefile*`
 
-You're now ready for calling the release script.
 
 
 # Statically linked, Qt-zlib
