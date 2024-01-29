@@ -189,6 +189,7 @@ sudo apt-get install libsvgpp-dev
 Else see below for build instructions.
 
 ## Prepare Fritzing build
+- `cd ~`
 - ```git clone https://github.com/fritzing/fritzing-app.git```
 	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
 	- change compile script (phoenix.pro):
