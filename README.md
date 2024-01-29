@@ -1,5 +1,5 @@
 # FritzingBuild
-Building Fritzing with Ubuntu 22.04 LTS
+Building Fritzing with and for Ubuntu 22.04 LTS
 
 Please don't ask for binaries.
 
@@ -25,30 +25,50 @@ All that documentation is inconclusive, inconsistent and outdated. This just is 
 
 So I decided to try this with a newer release of Ubuntu, here we go.
 
-# Alternatives?
-I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken. Don't choose 22.04 LTS, because Qt is 6.2.4. Fritzing 1.0.2 depends on Qt > 6.5.2. Don't choose Ubuntu 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```  
-When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on). But this also uses Qt 6.4.2. So having the correct version of Qt is the main issue...
-
 # How ?
 We'll set up a sufficiently beefy VM and get going in there. No containerized building.
+
+This is a little diatribe concerning possible options and also giving the reasoning behind the chosen solution. Skip this, the To Do and Alternatives, if you feel like you don't want to be bothered with these aspects.
+
+I originally intended having a static build with everything bundled for easier deployment:
+- Qt is at a lower version in most distros than the one Fritzing depends on, Qt can easily be built as static libraries.
+- SpiceNG as well (Fritzing is at 40, Ubuntu 22.04 at 36), I thought a static build was easy, after all, the library build is specified by just setting a parameter
+- Clipping lib doesn't come as binaries
+- Quazip is closely linked to Qt version
+
+So a static build was a reasonable solution. 
+
+Well, Fritzing and SpiceNG threw some wrenches:  
+
+- Fritzing explicitly checks for loading of a dynamic version of SpiceNG
+- SpiceNG needs modifications in its automake files at three different places for a static build (which in the end I succeeded doing but couldn't use without patching the Fritzing source).
+
+So in the end, I did a mixed build. Some parts were linked statically, some dynamically and copied over to the `.lib` directory where the Fritzing binary resides.
+
+Static:
+- Qt
+- Clipping
+- Quazip
+
+Dynamic:
+- SpiceNG
+- git2
+- svgpp (which isn't a library in the original sense)
+
+# Alternatives?
+## Build System
+I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken (see above). But with 22.04 LTS,  Qt is at 6.2.4. Fritzing 1.0.2 depends on Qt > 6.5.2. Don't choose Ubuntu 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu``` When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on). But this also uses Qt 6.4.2. 
+
+So having the correct version of Qt is the main issue if you want to skip building Qt yourself. You can, of course get pre-built binaries of any Qt version from the Qt site if you have/create an account.
+
+## Purely dynamic linking
+Sure, possible. Be prepared to copy all Qt dependencies and required libraries (git2, Quazip, Clipping).
+
 
 # To Do
 - re-structure (steps in correct ordering, first, we need to build qt, then quazip)
 - maybe create a snap or flatpack?
-- fix simulator (include lib):
-  ```
-  Running command(remcirc):
-  qt.core.library: "ngspice" cannot load: Cannot load library ngspice: (/lib/x86_64-linux-gnu/ngspice: Kann die Datei-Daten nicht lesen: Ist ein Verzeichnis)
-  "Couldn't load ngspice Cannot load library ngspice: (/lib/x86_64-linux-gnu/ngspice: Kann die Datei-Daten nicht lesen: Ist ein Verzeichnis)"
-  "Try path /home/daniel/fritzing-app/tools/linux_release_script/fritzing-1.0.2b_develop_private.linux.AMD64/lib/libngspice.so"
-  "Try path /home/daniel/.local/share/Fritzing/Fritzing/libngspice.so"
-  "Try path /usr/share/gnome/Fritzing/Fritzing/libngspice.so"
-  "Try path /usr/local/share/Fritzing/Fritzing/libngspice.so"
-  "Try path /usr/share/Fritzing/Fritzing/libngspice.so"
-  "Try path /var/lib/snapd/desktop/Fritzing/Fritzing/libngspice.so"
-  "Could not find ngspice."
-  Running m_simulator->command('reset'):
-  ```
+
 
 # Common Steps for Ubuntu 22.04 Build Environment
 Set up the basic build environment (VM, dependencies) for building Fritzing.  
