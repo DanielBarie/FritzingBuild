@@ -1,7 +1,7 @@
 # FritzingBuild
 Building Fritzing with and for Ubuntu 22.04 LTS on AMD64.
 
-Please don't ask for binaries. For obvious reasons.  
+Please don't ask for binaries. For obvious reasons, see [this explanation](https://forum.fritzing.org/t/can-t-find-source-code/19723/6).   
 Please don't ask for help. StackOverflow is your friend.  
 
 Quite an expensive process figuring this out, about €Multi-K when taking my hourly wage. At least I've dusted off my software build skills. Repeated builds will of course be cheaper...
@@ -61,6 +61,11 @@ Dynamic:
 - git2 (from distro)
 - svgpp (which isn't a library in the original sense) (from distro)
 
+# To Do
+- re-structure (static and dynamic build steps)
+- create script for patching pri files
+- maybe create a snap or flatpack?
+
 # Alternatives?
 ## Build System
 I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken (see above). But with 22.04 LTS,  Qt is at 6.2.4. Fritzing 1.0.2 depends on Qt > 6.5.2. Don't choose Ubuntu 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu``` When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on). But this also uses Qt 6.4.2. 
@@ -75,15 +80,9 @@ Which makes for a ton of dependencies to manually keep tabs on.
 Sure, possible, see notes below.
 But you need to patch the Fritzing source for that to work.
 
-# To Do
-- re-structure (static and dynamic build steps)
-- create script for patching pri files
-- maybe create a snap or flatpack?
-
 
 # Steps for Ubuntu 22.04 Build Environment
 Set up the basic build environment (VM, dependencies) for building Fritzing.  
-Having completed that, you may choose to build Fritzing linked either dynamically or statically. The main difference is the Qt build.  
 
 Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some components (nodejs > 14 required, doesn't matter for us (pdf components))
 - get Ubuntu 22.04 LTS
@@ -247,8 +246,74 @@ We've taken some DIY shortcuts:
 - Drop the modified release script (`release_db.sh`) from this repo into that folder
 - `./release_db.sh <your version string>`: Version string must include `develop` because we've taken some shortcuts.
 
-You'll end up with a .tar.bz2 file containing the only (specific) dependency (libspiceng). 
+You'll end up with a .tar.bz2 file including the only (specific) dependency (libspiceng). 
 
+## Deploy it
+There still are a ton of dependencies, many of which are bread and butter libraries:
+```
+ldd Fritzing
+        linux-vdso.so.1 (0x00007ffcb2d7c000)
+        libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f8269bb3000)
+        libgit2.so.1.1 => /lib/x86_64-linux-gnu/libgit2.so.1.1 (0x00007f8267300000)
+        libbz2.so.1.0 => /lib/x86_64-linux-gnu/libbz2.so.1.0 (0x00007f8269ba0000)
+        libxkbcommon-x11.so.0 => /lib/x86_64-linux-gnu/libxkbcommon-x11.so.0 (0x00007f8269b95000)
+        libxcb-cursor.so.0 => /lib/x86_64-linux-gnu/libxcb-cursor.so.0 (0x00007f8267000000)
+        libxcb-icccm.so.4 => /lib/x86_64-linux-gnu/libxcb-icccm.so.4 (0x00007f8269b8c000)
+        libxcb-image.so.0 => /lib/x86_64-linux-gnu/libxcb-image.so.0 (0x00007f8269b86000)
+        libxcb-keysyms.so.1 => /lib/x86_64-linux-gnu/libxcb-keysyms.so.1 (0x00007f8269b81000)
+        libxcb-randr.so.0 => /lib/x86_64-linux-gnu/libxcb-randr.so.0 (0x00007f8269b6e000)
+        libxcb-render-util.so.0 => /lib/x86_64-linux-gnu/libxcb-render-util.so.0 (0x00007f8269b67000)
+        libxcb-shm.so.0 => /lib/x86_64-linux-gnu/libxcb-shm.so.0 (0x00007f8269b62000)
+        libxcb-sync.so.1 => /lib/x86_64-linux-gnu/libxcb-sync.so.1 (0x00007f82672f6000)
+        libxcb-xfixes.so.0 => /lib/x86_64-linux-gnu/libxcb-xfixes.so.0 (0x00007f82672ec000)
+        libxcb-render.so.0 => /lib/x86_64-linux-gnu/libxcb-render.so.0 (0x00007f82672dd000)
+        libxcb-shape.so.0 => /lib/x86_64-linux-gnu/libxcb-shape.so.0 (0x00007f82672d8000)
+        libxcb-xkb.so.1 => /lib/x86_64-linux-gnu/libxcb-xkb.so.1 (0x00007f82672ba000)
+        libSM.so.6 => /lib/x86_64-linux-gnu/libSM.so.6 (0x00007f82672af000)
+        libICE.so.6 => /lib/x86_64-linux-gnu/libICE.so.6 (0x00007f8267292000)
+        libxcb-glx.so.0 => /lib/x86_64-linux-gnu/libxcb-glx.so.0 (0x00007f8267275000)
+        libdrm.so.2 => /lib/x86_64-linux-gnu/libdrm.so.2 (0x00007f826725f000)
+        libX11-xcb.so.1 => /lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007f826725a000)
+        libxcb.so.1 => /lib/x86_64-linux-gnu/libxcb.so.1 (0x00007f8267230000)
+        libEGL.so.1 => /lib/x86_64-linux-gnu/libEGL.so.1 (0x00007f826721d000)
+        libfreetype.so.6 => /lib/x86_64-linux-gnu/libfreetype.so.6 (0x00007f8266f38000)
+        libfontconfig.so.1 => /lib/x86_64-linux-gnu/libfontconfig.so.1 (0x00007f8266eee000)
+        libX11.so.6 => /lib/x86_64-linux-gnu/libX11.so.6 (0x00007f8266dae000)
+        libxkbcommon.so.0 => /lib/x86_64-linux-gnu/libxkbcommon.so.0 (0x00007f8266d67000)
+        libbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x00007f826720f000)
+        libudev.so.1 => /lib/x86_64-linux-gnu/libudev.so.1 (0x00007f8266d3d000)
+        libGLX.so.0 => /lib/x86_64-linux-gnu/libGLX.so.0 (0x00007f8266d09000)
+        libOpenGL.so.0 => /lib/x86_64-linux-gnu/libOpenGL.so.0 (0x00007f8266cdd000)
+        libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f8266a00000)
+        libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f8266919000)
+        libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f8266cbd000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f8266600000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f8269be0000)
+        libmbedtls.so.14 => /lib/x86_64-linux-gnu/libmbedtls.so.14 (0x00007f8266c8a000)
+        libmbedx509.so.1 => /lib/x86_64-linux-gnu/libmbedx509.so.1 (0x00007f8266c68000)
+        libmbedcrypto.so.7 => /lib/x86_64-linux-gnu/libmbedcrypto.so.7 (0x00007f8266898000)
+        libpcre.so.3 => /lib/x86_64-linux-gnu/libpcre.so.3 (0x00007f826658a000)
+        libhttp_parser.so.2.9 => /lib/x86_64-linux-gnu/libhttp_parser.so.2.9 (0x00007f8266c5c000)
+        libssh2.so.1 => /lib/x86_64-linux-gnu/libssh2.so.1 (0x00007f8266854000)
+        libgssapi_krb5.so.2 => /lib/x86_64-linux-gnu/libgssapi_krb5.so.2 (0x00007f8266536000)
+        libxcb-util.so.1 => /lib/x86_64-linux-gnu/libxcb-util.so.1 (0x00007f8266c53000)
+        libuuid.so.1 => /lib/x86_64-linux-gnu/libuuid.so.1 (0x00007f8266c4a000)
+        libbsd.so.0 => /lib/x86_64-linux-gnu/libbsd.so.0 (0x00007f8266c32000)
+        libXau.so.6 => /lib/x86_64-linux-gnu/libXau.so.6 (0x00007f8266c2c000)
+        libXdmcp.so.6 => /lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007f826684c000)
+        libGLdispatch.so.0 => /lib/x86_64-linux-gnu/libGLdispatch.so.0 (0x00007f826647e000)
+        libpng16.so.16 => /lib/x86_64-linux-gnu/libpng16.so.16 (0x00007f8266443000)
+        libexpat.so.1 => /lib/x86_64-linux-gnu/libexpat.so.1 (0x00007f8266412000)
+        libbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007f8266829000)
+        libcrypto.so.3 => /lib/x86_64-linux-gnu/libcrypto.so.3 (0x00007f8265e00000)
+        libkrb5.so.3 => /lib/x86_64-linux-gnu/libkrb5.so.3 (0x00007f8266345000)
+        libk5crypto.so.3 => /lib/x86_64-linux-gnu/libk5crypto.so.3 (0x00007f8266316000)
+        libcom_err.so.2 => /lib/x86_64-linux-gnu/libcom_err.so.2 (0x00007f8266310000)
+        libkrb5support.so.0 => /lib/x86_64-linux-gnu/libkrb5support.so.0 (0x00007f8266302000)
+        libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x00007f82662f5000)
+        libkeyutils.so.1 => /lib/x86_64-linux-gnu/libkeyutils.so.1 (0x00007f82662ec000)
+        libresolv.so.2 => /lib/x86_64-linux-gnu/libresolv.so.2 (0x00007f82662d8000)
+```
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
 Below steps are different for shared libs / dynamic linking and static linking.
@@ -260,8 +325,7 @@ Below steps are different for shared libs / dynamic linking and static linking.
   - note: Documentation: https://doc.qt.io/qt-6/configure-options.html section "Reconfiguring Existing Builds"
   - note: Do also try removing 'CMakeCache.txt' from the build directory
   - note: Care about modules?  `/usr/local/Qt-6.6.1/bin/qt-configure-module`
-  - note: Go static (see below)? 
-  - `sudo apt-get install libwayland-dev  libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`
+  - `sudo apt-get install libwayland-dev libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`
   - `sudo apt-get install libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-cursor-dev libxcb-glx0-dev`
   - `sudo apt-get install libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-util-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev`
   - `sudo apt-get install libxrender1 libxcb-render-util0 libxcb-shape0 libxcb-randr0 libxcb-xfixes0 libxcb-xkb1 libxcb-sync1 libxcb-shm0  libxcb-icccm4 libxcb-keysyms1-dev libxcb-image0  libxcb-util1 libxcb-cursor0 libxkbcommon-tools libxkbcommon-x11-0 libxkbcommon0 libfontconfig libfreetype6 libxext6 libx11-6 libxcb1 libx11-xcb1 libsm6 libice6 libglib2.0-0 libglib2.0-bin`
