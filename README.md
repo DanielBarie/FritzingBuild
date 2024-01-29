@@ -178,7 +178,7 @@ Install libgit2-dev and libgit2:
 - `mkdir build-dir`
 - `cd build-dir`
 - `cmake ..`
-- `make`
+- `make -j`
 - Indicator of success: watch for ```[100%] Linking CXX static library libpolyclipping.a```
 - library file `libpolyclipping.a` will be in `~/Clipper1/cpp/build-dir`
 
@@ -216,15 +216,14 @@ Else see below for build instructions.
 - fix quazip detect script:
    	- `nano pri/quazipdetect.pri`
    	- change `QUAZIP_PATH=$$absolute_path($$PWD/../../quazip-$$QT_VERSION-$$QUAZIP_VERSION)` to be `QUAZIP_PATH=$$absolute_path($$PWD/../../quazip-1.4)`
-   	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/quazip```
+   	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH``` (no trailing slash, will set quazip-prefix in source code include define)
    	- change `QUAZIP_LIB_PATH=$$QUAZIP_PATH/lib` to be `QUAZIP_LIB_PATH=$$QUAZIP_PATH/build-dir/quazip`
    	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION```
-- edit project file for platform plugin inclusion:
-	- `nano phoenix.pro`
  	
 - Test build
   - `qmake`
-  - `make`
+  	- qmake failed to get called? Did you set the export `QT_SELECT=qt6`?
+  - `make -j`
 - Everything ok? proceed... if not: fix
   - `make clean`
   - `rm Makefile*`
