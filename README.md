@@ -70,7 +70,7 @@ Sure, possible. Be prepared to copy all Qt dependencies and required libraries (
 - maybe create a snap or flatpack?
 
 
-# Common Steps for Ubuntu 22.04 Build Environment
+# Steps for Ubuntu 22.04 Build Environment
 Set up the basic build environment (VM, dependencies) for building Fritzing.  
 Having completed that, you may choose to build Fritzing linked either dynamically or statically. The main difference is the Qt build.  
 
@@ -94,8 +94,24 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 	- ```wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz```
  	- ```tar xzvf boost_1_84_0.tar.gz```
 
+# Build Dependencies and Fritzing
+## Do Qt build
+- `cd ~/qt-build`
+- `mkdir qt-static`
+- `cd qt-static`
+- ` ../qt-everywhere-src-6.6.1/configure -static -qt-zlib -prefix /opt/Qt6.6.1`
+- optional: check config.result for appropriate configuration (X11 / Wayland platform plugins, qt-zlib = yes, shared libraries = no)
+- ```cmake --build . --parallel```, libs will be in `~/qt-build/qt-static/qtbase/lib`
+- ```sudo cmake --install .``` will install to `/opt/Qt6.6.1`
+- ```apt-get install qtchooser```
+- ```qtchooser -install qt6 /opt/Qt6.6.1/bin/qmake```
+- ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
-# This is where the common part stops
+## Satisfy libgit2 requirement
+Install libgit2-dev and libgit2
+
+
+# These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
 Below steps are different for shared libs / dynamic linking and static linkin.
 
   
