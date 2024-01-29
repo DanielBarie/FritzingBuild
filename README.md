@@ -105,6 +105,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  	- ```tar xzvf boost_1_84_0.tar.gz```
 
 # Build Dependencies and Fritzing
+This will be multiple steps involving download of various dependencies, unpacking, and building these. For your orientation, there's a diagram of the resulting directory structure in a [separate section](#directory-structure-of-build).
+
 ## Do Qt build
 - `sudo apt-get install libwayland-dev  libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`
 - `sudo apt-get install libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-cursor-dev libxcb-glx0-dev`
@@ -313,6 +315,57 @@ ldd Fritzing
         libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x00007f82662f5000)
         libkeyutils.so.1 => /lib/x86_64-linux-gnu/libkeyutils.so.1 (0x00007f82662ec000)
         libresolv.so.2 => /lib/x86_64-linux-gnu/libresolv.so.2 (0x00007f82662d8000)
+```
+
+
+## Directory structure of build:
+```
+.
+├── boost_1_84_0
+│   ├── boost
+│   ├── doc
+│   ├── libs
+│   ├── more
+│   ├── status
+│   └── tools
+├── Clipper1
+│   ├── C#
+│   ├── cpp
+│   ├── Delphi
+│   ├── Documentation
+│   └── Third Party
+├── fritzing-app
+│   ├── config.tests
+│   ├── debug
+│   ├── docker
+│   ├── help
+│   ├── pri
+│   ├── release
+│   ├── resources
+│   ├── sketches
+│   ├── src
+│   ├── test
+│   ├── tests
+│   ├── tools
+│   └── translations
+├── ngspice-42
+│   ├── autom4te.cache
+│   ├── examples
+│   ├── m4
+│   ├── man
+│   ├── releasesh
+│   ├── src
+│   ├── tests
+│   └── visualc
+├── qt-build
+│   ├── qt-everywhere-src-6.6.1
+│   └── qt-static
+├── quazip-1.4
+    ├── build-dir
+    ├── cmake
+    ├── quazip
+    └── qztest
+
 ```
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
