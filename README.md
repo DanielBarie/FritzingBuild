@@ -704,6 +704,18 @@ Go to Edit -> Settings -> Beta Features, set checkbox.
 
 You might want to set the Gerber checkbox as well.
 
+## Spice, Spice, Spice..
+libngspice gets compiled into a static library (`libngspice.a`) and successfully linked (statically) into Fritzing binary. But Fritzung still wants to load the shared version?
+
+Check exports of compiled static library: 
+`nm libngspice.a | grep ngSpice_Init` should give 
+```
+0000000000000cd0 T ngSpice_Init
+0000000000000360 T ngSpice_Init_Evt
+00000000000001b0 T ngSpice_Init_Sync
+```
+Good. 
+
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
 https://gist.github.com/gubatron/32f82053596c24b6bec6?permalink_comment_id=2575013
