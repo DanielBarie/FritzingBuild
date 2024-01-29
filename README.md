@@ -196,7 +196,8 @@ Else see below for build instructions.
 	- change compile script (phoenix.pro):
 		- allow for later versions of qt
    	- ```nano ./fritzing-app/phoenix.pro```
-   	- change QT_MOST to 6.6.10 (or whatever is sufficiently high)
+   		- change QT_MOST to 6.6.10 (or whatever is sufficiently high)
+   		- in unix!macx section, below `LIBS += -lz` add new line `QTPLUGIN.platforms = qminimal qxcb qoffscreen qwayland qvnc` (see: https://doc.qt.io/qt-6/qpa.html)
 - change boost detect script (will only accept up to 81)
     - ```nano ./fritzing-app/pri/boostdetect.pri```
    	- find `BOOSTS = 81`
@@ -218,14 +219,9 @@ Else see below for build instructions.
    	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/quazip```
    	- change `QUAZIP_LIB_PATH=$$QUAZIP_PATH/lib` to be `QUAZIP_LIB_PATH=$$QUAZIP_PATH/build-dir/quazip`
    	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION```
-- fix libgit detect script:
-	- `nano pri/libgit2detect.pri`
- 	- comment out conditional for including static lib, just set `LIBGITSTATIC = true`
- 	- change `LIBGIT2LIB = $$LIBGITPATH/lib` to be `LIBGIT2LIB = $$LIBGITPATH/build`
 - edit project file for platform plugin inclusion:
 	- `nano phoenix.pro`
- 	- in unix!macx section, below `LIBS += -lz` add new line `QTPLUGIN.platforms = qminimal qxcb qoffscreen qwayland qvnc`
-  	- see: https://doc.qt.io/qt-6/qpa.html
+ 	
 - Test build
   - `qmake`
   - `make`
