@@ -70,7 +70,8 @@ Sure, possible, see notes below.
 But you need to patch the Fritzing source for that to work.
 
 # To Do
-- re-structure (steps in correct ordering, first, we need to build qt, then quazip)
+- re-structure (static and dynamic build steps)
+- create script for patching pri files
 - maybe create a snap or flatpack?
 
 
