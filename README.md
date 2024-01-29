@@ -725,6 +725,7 @@ But then:
 `nm Fritzing | grep spice` does come up empty. Must have gone AWOL during linking.  
 Maybe try -rdynamic flag when linking? Doesn't work. Lets try including the whole archive during linking. Modify `pri/spicedetect.pri` to have 
 ```
+LIBS += -Wl,--whole-archive $$absolute_path($${NGSPICEPATH}/releasesh/src/.libs/libngspice.a) -Wl,--no-whole-archive
 ```
 Linking throws a ton of errors related to openMP, e.g.:
 ``` 
