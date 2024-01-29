@@ -231,8 +231,18 @@ Else see below for build instructions.
 You're now ready for calling the release script.
 
 # Building Release
+We've taken some DIY shortcuts: 
+- We're set on doing a development release
+- But with the master branch parts repo
+- Please be aware that the script will normally work without a GUI except if parts from the fritzing-parts repo have errors in their definitions.
+  
+## Now, go do it:
 - `cd ~/fritzing-app/tools/linux_release_script`
-- 
+- Drop the modified release script (`release_db.sh`) from this repo into that folder
+- `./release_db.sh <your version string>`: Version string must include `develop` because we've taken some shortcuts.
+
+You'll end up with a .tar.bz2 file containing the only (specific) dependency (libspiceng). 
+
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
 Below steps are different for shared libs / dynamic linking and static linkin.
