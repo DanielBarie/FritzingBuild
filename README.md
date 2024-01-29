@@ -245,7 +245,7 @@ We've taken some DIY shortcuts:
   
 ## Now, go do it:
 - `cd ~/fritzing-app/tools/linux_release_script`
-- Drop the modified release script (`release_db.sh`) from this repo into that folder
+- Drop the [modified release script](https://github.com/DanielBarie/FritzingBuild/blob/main/release_db.sh) (`release_db.sh`) from this repo into that folder
 - `./release_db.sh <your version string>`: Version string must include `develop` because we've taken some shortcuts.
 
 You'll end up with a .tar.bz2 file including the only (specific) dependency (libspiceng). 
