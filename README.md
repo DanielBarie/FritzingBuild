@@ -551,7 +551,8 @@ Please note that he library gets linked statically (well, no, we're telling the 
 - library file will be in `~/Clipper1/cpp/build-dir`
 
 ## Do Quazip Build
-for dynamic linking, see other instructions
+For dynamic linking, see other instructions.  
+See [here for static build](https://github.com/DanielBarie/FritzingBuild/blob/main/README.md#quazip-static-build).
 
 ## Install svgpp
 `sudo apt-get install libsvgpp-dev`
