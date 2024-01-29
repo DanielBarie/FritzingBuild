@@ -511,7 +511,7 @@ Install libgit2-dev and libgit2
 - no: `./configure -enable-static`
 - edit `configure.ac`
 	- line # 481: replace `AC_SUBST([STATIC], [-shared])` with `AC_SUBST([STATIC], [-static])` as per https://sourceforge.net/p/ngspice/discussion/127605/thread/2216ffc5/
- - edit `~ngspice/src/makefile.am`
+ - edit `~ngspice/src/Makefile.am`
  	- line 634: change `` to static
  	- line 636 change to static and include lib ver
   	- after change, looks like
