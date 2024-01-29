@@ -214,10 +214,16 @@ Install libgit2-dev and libgit2
  - edit `~ngspice/src/makefile.am`
  	- line 634: change `` to static
  	- line 636 change to static and include lib ver
+  	- after change, looks like
+	```
+ 	libngspice_la_CFLAGS = -static
+
+	libngspice_la_LDFLAGS =  -static -version-info @LIB_VERSION@
+ 	```
  - `./compile_linux_shared.sh 64`
  - result will be found in `~/ngspice-42/releasesh/src/.libs` (`libngspice.a`), approx. 18MB, don't worry about failed install (can't write to system dirs without sufficient privileges, obviously...)
 
-For whatever reason (I haven't been able to figure out, yet), the library gets linked statically but Fritzing still complains about not having access to the shared version of it. ldd doesn't show any symbols for SPICE, so it must have been included statically. But wth... There still is one thing left to check: Simulation src in Fritzing code. 
+For whatever reason (I haven't been able to figure out, yet), the library gets linked statically (well, no, we're telling the linker to do it but it gets thrown out) but Fritzing still complains about not having access to the shared version of it (in retrospect completely correct because the static lib got thrown out during linking). ldd doesn't show any symbols for SPICE, so it must have been included statically. But wth... There still is one thing left to check: Simulation src in Fritzing code. 
 
 ## Do Clipping Library Build (static)
 - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
