@@ -333,8 +333,11 @@ When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_
   - `qmake`
   - `make`
 - Everything ok? proceed... if not: fix
-  - `make clean`
-  - `rm Makefile*`
+- `make clean`
+- `rm Makefile*`
+
+You're now ready for calling the release script.
+
 
 # Statically linked, Qt-zlib
 Well, not entirely static build. Qt, Clipping and SpiceNG will be linked statically, Quazip, svgpp and Git2 will be linked dynamically. Main reasons are: The required version of Qt is still well ahead of most distributions, there are no binaries for the Clipping library. As for SpiceNG: there are binary builds in most distributions but with lower version numbers (Ubuntu 22.04: v36). Quazip must match our version of Qt, so no luck here, either. We can't rely on binaries for most distributions. The main reason for dynamically linking this is linking issues. Same for Git2. But the Git2 library is available in most distirbutions. Same for svgpp-dev.
