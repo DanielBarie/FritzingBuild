@@ -136,9 +136,27 @@ Install libgit2-dev and libgit2:
 - untar
 - Skip with modified `pri/quazipdetect.pri`: rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
 - `cd quazip-1.4`
+- `nano CMakelists.txt`
+	- change
+  	```
+    	else()
+ 		option(BUILD_SHARED_LIBS "" ON)
+   		option(QUAZIP_INSTALL "" ON)
+  		option(QUAZIP_USE_QT_ZLIB "" OFF)
+   	```
+   	to be
+  	```
+   	else()
+ 		option(BUILD_SHARED_LIBS "" OFF)
+   		option(QUAZIP_INSTALL "" OFF)
+  		option(QUAZIP_USE_QT_ZLIB "" ON)
+   	```
 - `mkdir build-dir`
-- cmake needs to be called with path to qt6 files: `cmake -S . -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/usr/local/Qt-6.6.1/lib/cmake"`
+- cmake needs to be called with path to qt6 files: `cmake .. -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/opt/Qt6.6.1/lib/cmake"`
 - `cmake --build ./ --parallel`
+
+
+
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
 Below steps are different for shared libs / dynamic linking and static linkin.
