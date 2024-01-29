@@ -758,6 +758,58 @@ is looking great:
 0000000000966240 T ngSpice_UnlockRealloc
 ```
 
+So why on earth don't these get used. Well, use the source, Luke. See: `src/simulation/ngspice_simulator.cpp`:
+```
+void NgSpiceSimulator::init() {
+        if (m_isInitialized) return;
+
+        m_library.setFileName("ngspice");
+        m_library.load();
+
+        QStringList libPaths = QStringList({ QCoreApplication::applicationDirPath()
+                        })
+                        // TODO Not sure if we can place the library there on macOS
+                        + QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation);
+
+        if( !m_library.isLoaded() ) {         // fallback custom paths
+        #ifdef Q_OS_LINUX
+                const QString libName = "libngspice.so";
+        #elif defined Q_OS_MAC
+                const QString libName = "libngspice.0.dylib";
+        #elif defined Q_OS_WIN
+                const QString libName = "ngspice.dll";
+        #endif
+                DebugDialog::debug("Couldn't load ngspice " + m_library.errorString());
+                for( const auto& path : libPaths ) {
+                        QFileInfo library(QString(path + "/" + libName));
+                        DebugDialog::debug("Try path " + library.absoluteFilePath());
+                        if(!library.canonicalFilePath().isEmpty()) {
+                                m_library.setFileName(library.canonicalFilePath());
+                                m_library.load();
+                                if( m_library.isLoaded() ) {
+                                        break;
+                                } else {
+                                        DebugDialog::debug("Couldn't load ngspice " + m_library.errorString());
+                                        throw std::runtime_error( "Error loading ngspice shared library" );            >
+                                }
+                        }
+                }
+        }
+
+        if (!m_library.isLoaded()) {
+                DebugDialog::debug("Could not find ngspice.");
+                return;
+        }
+...
+```
+So Fritzing insists on loading the lib dynamically. Static compilation seems to be totally unreasonable. On the one hand I do understand these additional checks, on the other hand I don't.  
+We now have two options:  
+
+- patch the source to allow for static linking or
+- go for dynamic linking with the source as is.
+
+I don't really feel like patching the source since this will just end up being more work each time a new version of Fritzing is released. And most distros actually ship a version of `libngspice.so` (Ubuntu 22.04 is at v36). Well, go dynamic.
+
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
 https://gist.github.com/gubatron/32f82053596c24b6bec6?permalink_comment_id=2575013
