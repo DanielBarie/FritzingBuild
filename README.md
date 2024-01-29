@@ -705,7 +705,7 @@ Go to Edit -> Settings -> Beta Features, set checkbox.
 You might want to set the Gerber checkbox as well.
 
 ## Spice, Spice, Spice..
-libngspice gets compiled into a static library (`libngspice.a`) and successfully linked (statically) into Fritzing binary. But Fritzung still wants to load the shared version?
+libngspice gets compiled into a static library (`libngspice.a`) and successfully linked (statically) into Fritzing binary. But Fritzing still wants to load the shared version?
 
 Check exports of compiled static library: 
 `nm libngspice.a | grep ngSpice_Init` should give 
@@ -716,8 +716,20 @@ Check exports of compiled static library:
 ```
 Good. 
 But then:
-`nm Fritzing | grep spice` does come up empty. Must have gone AWOL during linking.
-Maybe try -dynamic flag when linking?
+`nm Fritzing | grep spice` does come up empty. Must have gone AWOL during linking.  
+Maybe try -rdynamic flag when linking? Doesn't work. Lets try including the whole archive during linking. Modify `pri/spicedetect.pri` to have 
+```
+```
+Linking throws a ton of errors related to openMP, e.g.:
+``` 
+usr/bin/ld: /home/daniel/ngspice-42/releasesh/src/.libs/libngspice.a(osdiload.o): in function `OSDIload._omp_fn.0':
+osdiload.c:(.text+0x1a8): undefined reference to `GOMP_barrier
+```
+Which means we've successfully forced the library to be linked. (Still haven't found out why it gets thrown out in the first place.)  
+Add `-fopen` flag in `phoenix.pro`:
+```
+QMAKE_CXXFLAGS += -O3 -fno-omit-frame-pointer -fopenmp
+``` 
 
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
