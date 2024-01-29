@@ -1,17 +1,23 @@
 # FritzingBuild
-Building Fritzing with and for Ubuntu 22.04 LTS
+Building Fritzing with and for Ubuntu 22.04 LTS on AMD64.
 
-Please don't ask for binaries.
+Please don't ask for binaries. For obvious reasons.  
+Please don't ask for help. StackOverflow is your friend.  
 
 Quite an expensive process figuring this out, about €Multi-K when taking my hourly wage. At least I've dusted off my software build skills. Repeated builds will of course be cheaper...
-![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/e97830fd-37e5-4151-91bf-8deac4182c02)
-![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/6673ce88-e0bf-4592-9234-d20469ed429b)
 
+![About Window Fritzing](https://github.com/DanielBarie/FritzingBuild/assets/73287620/6673ce88-e0bf-4592-9234-d20469ed429b)
+
+![Fritzing Simulation with Smoke](https://github.com/DanielBarie/FritzingBuild/assets/73287620/ef05ea46-73ee-443e-af6a-48635b21f49d)
+
+![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/e97830fd-37e5-4151-91bf-8deac4182c02)
+
+This is a more (final build instructions) or less (separate instructions for static / dynamic builds) structured set of steps. The less well structured parts are a documentation of what worked and what didn't work. Also included: Fixes for errors/difficulties encountered along the way.
 
 # What?
 Obviously building Fritzing for teaching purposes. The goal is having a release and building a VM for students to explore electrical circuits and their simulation using Fritzing.
 
-We'll build with the latest (as of writing) version of Qt which is 6.6.1. For the brave: Download any version greater than 6.5.2 (minimum requirement for Fritzing) at https://download.qt.io/archive/qt/ Please be advised to change paths accordingly.
+We'll build with the latest (as of writing) version of Qt which is 6.6.1. For the brave: Download any version greater than 6.5.2 (minimum requirement for Fritzing) at [Qt Release Archive](https://download.qt.io/archive/qt/). Please be advised to change paths accordingly.
 
 Compilation will give some deprecation warnings regarding Qt functions. Will work anyway, we'll maybe have to re-visit this if Qt remove/change these functions.
 
@@ -52,8 +58,8 @@ Static:
 
 Dynamic:
 - SpiceNG
-- git2
-- svgpp (which isn't a library in the original sense)
+- git2 (from distro)
+- svgpp (which isn't a library in the original sense) (from distro)
 
 # Alternatives?
 ## Build System
@@ -245,7 +251,7 @@ You'll end up with a .tar.bz2 file containing the only (specific) dependency (li
 
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
-Below steps are different for shared libs / dynamic linking and static linkin.
+Below steps are different for shared libs / dynamic linking and static linking.
 
   
 # Dynamically linked, Qt-zlib
@@ -311,6 +317,7 @@ When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_
    - `cmake ..`
    - `make -j`
    - optional system-wide installation: `sudo make install`, files will be in /usr/local/include/polyclipping and /usr/local/lib
+     
 ## build svgpp lib v1.3.0 (as of writing, matches version expected by Fritzing)
    - `git clone https://github.com/svgpp/svgpp.git`
    - `sudo apt-get install libxml2-dev`
