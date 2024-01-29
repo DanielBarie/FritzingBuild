@@ -115,7 +115,17 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
 ## Satisfy libgit2 requirement
-Install libgit2-dev and libgit2
+Install libgit2-dev and libgit2:
+`sudo apt-get install libgit2-dev libgit2-1.1`
+
+## Do spiceng Build
+- get sources from https://ngspice.sourceforge.io/download.html
+- untar
+- ```sudo apt-get install libxaw7-dev automake libtool```
+- change to unzip dir
+- `./compile_linux_shared.sh`
+- Library file will be in `~/ngspice-42/releasesh/src/.libs`: `libngspice.so`
+
 
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
@@ -123,7 +133,7 @@ Below steps are different for shared libs / dynamic linking and static linkin.
 
   
 # Dynamically linked, Qt-zlib
-## Prepare and Do Qt build
+## Prepare and Do Qt Build
   - note: Be careful when re-configuring. There may be artifacts from previous builds. See https://stackoverflow.com/questions/6067271/qt-when-building-qt-from-source-how-do-i-clean-old-configure-configurations
   - note: Documentation: https://doc.qt.io/qt-6/configure-options.html section "Reconfiguring Existing Builds"
   - note: Do also try removing 'CMakeCache.txt' from the build directory
@@ -146,7 +156,7 @@ Below steps are different for shared libs / dynamic linking and static linkin.
   - ```qtchooser -install qt6 /usr/local/Qt-6.6.1/bin/qmake```
   - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
  
-## do libgit build 
+## Do libgit Build 
 or install `sudo apt-get install libgit2-dev` and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
    - `wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.1.tar.gz`
    - untar
@@ -155,15 +165,14 @@ or install `sudo apt-get install libgit2-dev` and skip steps below (but remember
    - `cmake ..`
    - `cmake --build . --parallel`
  
- ## do spiceng build 
+ ## Do spiceng Build
 or install shared lib devel package (https://packages.ubuntu.com/search?keywords=ngspice ngspice-dev) and skip steps below (but remember to change lib paths for Fritzing build and install the package when deploying)
-   - get sources from https://ngspice.sourceforge.io/download.html
-   - unzip
-   - ```apt-get install libxaw7-dev```
-   - change to unzip dir
-   - ```./configure```
-   - ```make```
-   - rename directory to `ngspice-40`
+- get sources from https://ngspice.sourceforge.io/download.html
+- untar
+- ```sudo apt-get install libxaw7-dev```
+- change to unzip dir
+- ```./configure --with-ngshared```
+- ```make -j```
 
 When installing the distro package, for Ubuntu (22.04) do a `ln -s /usr/lib/x86_64-linux-gnu/libngspice.so.0 libngspice.so` in the `lib` subdir of your Fritzing installation. This actually is the preferred way.
 
@@ -248,8 +257,8 @@ Qt Shadow build: Keep build artifacts (and resulting binaries) out of the source
 Install libgit2-dev and libgit2
 
 ## Do spiceng Build (static)
-- get source, unzip (version 42)
-- `sudo apt-get install libxaw7-dev`
+- get source, untar (version 42)
+- `sudo apt-get install libxaw7-dev automake libtool`
 - no: `./configure -enable-static`
 - edit `configure.ac`
 	- line # 481: replace `AC_SUBST([STATIC], [-shared])` with `AC_SUBST([STATIC], [-static])` as per https://sourceforge.net/p/ngspice/discussion/127605/thread/2216ffc5/
@@ -265,7 +274,7 @@ Install libgit2-dev and libgit2
  - `./compile_linux_shared.sh 64`
  - result will be found in `~/ngspice-42/releasesh/src/.libs` (`libngspice.a`), approx. 18MB, don't worry about failed install (can't write to system dirs without sufficient privileges, obviously...)
 
-For whatever reason (I haven't been able to figure out, yet), the library gets linked statically (well, no, we're telling the linker to do it but it gets thrown out) but Fritzing still complains about not having access to the shared version of it (in retrospect completely correct because the static lib got thrown out during linking). ldd doesn't show any symbols for SPICE, so it must have been included statically. But wth... There still is one thing left to check: Simulation src in Fritzing code. 
+Please note that he library gets linked statically (well, no, we're telling the linker to do it but it gets thrown out) but Fritzing still complains about not having access to the shared version of it (in retrospect completely correct because the static lib got thrown out during linking and it insists on loading a shared version: ldd doesn't show any symbols for SPICE, so it must have been included statically. But wth... There still is one thing left to check: Simulation src in Fritzing code). See below comments in FAQ section.
 
 ## Do Clipping Library Build (static)
 - get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
