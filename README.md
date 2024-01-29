@@ -110,7 +110,7 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 - optional: check config.result for appropriate configuration (X11 / Wayland platform plugins, qt-zlib = yes, shared libraries = no)
 - ```cmake --build . --parallel```, libs will be in `~/qt-build/qt-static/qtbase/lib`
 - ```sudo cmake --install .``` will install to `/opt/Qt6.6.1`
-- ```apt-get install qtchooser```
+- ```sudo apt-get install qtchooser```
 - ```qtchooser -install qt6 /opt/Qt6.6.1/bin/qmake```
 - ```export QT_SELECT=qt6``` (you need to do this after each login or make it permanent in .bashrc)
 
