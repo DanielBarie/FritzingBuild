@@ -3,7 +3,7 @@ Building Fritzing with and for Ubuntu 22.04 LTS
 
 Please don't ask for binaries.
 
-Quite an expensive process figuring this out, about €1000 when taking my hourly wage. At least I've dusted off my software build skills. Repeated builds will of course be cheaper...
+Quite an expensive process figuring this out, about €Multi-K when taking my hourly wage. At least I've dusted off my software build skills. Repeated builds will of course be cheaper...
 ![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/e97830fd-37e5-4151-91bf-8deac4182c02)
 ![grafik](https://github.com/DanielBarie/FritzingBuild/assets/73287620/6673ce88-e0bf-4592-9234-d20469ed429b)
 
@@ -147,14 +147,39 @@ Install libgit2-dev and libgit2:
    	to be
   	```
    	else()
- 		option(BUILD_SHARED_LIBS "" ON)
+ 		option(BUILD_SHARED_LIBS "" OFF)
    		option(QUAZIP_INSTALL "" OFF)
   		option(QUAZIP_USE_QT_ZLIB "" OFF)
    	```
 - `mkdir build-dir`
 - cmake needs to be called with path to qt6 files: `cmake .. -D QUAZIP_QT_MAJOR_VERSION=6 -D CMAKE_PREFIX_PATH="/opt/Qt6.6.1/lib/cmake"`
 - `cmake --build ./ --parallel`
+- resulting library `libquazip1-qt6.a` will be in `~/quazip-1.4/build-dir/quazip`
 
+## Do Clipping Library Build (static)
+- get it from sourceforge: `https://sourceforge.net/projects/polyclipping/files/latest/download`
+- `mkdir Clipper1`, UPPERCASE!
+- `mv clipper_ver6.4.2.zip Clipper1`
+- `cd Clipper1`
+- unzip
+- `cd cpp`
+- change `cpp/CMakeLists.txt`:
+	- find
+ 		```
+   		SET(BUILD_SHARED_LIBS ON CACHE BOOL
+    		"Build shared libraries (.dll/.so) instead of static ones (.lib/.a)")
+		```  
+ 	- change to:
+  - 		```
+   		SET(BUILD_SHARED_LIBS OFF CACHE BOOL
+    		"Don't Build shared libraries (.dll/.so) instead of static ones (.lib/.a)")
+		```  
+- `mkdir build-dir`
+- `cd build-dir`
+- `cmake ..`
+- `make`
+- Indicator of success: watch for ```[100%] Linking CXX static library libpolyclipping.a```
+- library file `libpolyclipping.a` will be in `~/Clipper1/cpp/build-dir`
 
 
 
@@ -686,8 +711,8 @@ wget way below
 - rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
 - `cd quazip-6.6.1-1.4`
 - edit `CMakeLists.txt`
-	- find (in the else case, not EMSCRIPTEN) `option(BUILD_SHARED_LIBS "" OFF)`
- 	- change to `option(BUILD_SHARED_LIBS "" ON)`
+	- find (in the else case, not EMSCRIPTEN) `option(BUILD_SHARED_LIBS "" ON)`
+ 	- change to `option(BUILD_SHARED_LIBS "" OFF)`
   	- while you're at it, you may also disable the install (next line)
 - `cd build-dir`
 - cmake needs to be called with path to qt6 files: `cmake -S .. -B ./ -D QUAZIP_QT_MAJOR_VERSION=6 -DCMAKE_PREFIX_PATH="/opt/Qt6.6.1/lib/cmake"`
