@@ -96,6 +96,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
 
 # Build Dependencies and Fritzing
 ## Do Qt build
+ - get qt sources from https://download.qt.io/official_releases/qt/6.6/6.6.1/single/: ```https://download.qt.io/official_releases/qt/6.6/6.6.1/single/qt-everywhere-src-6.6.1.tar.xz```
+  - untar the sources: `tar xf...` takes a while in silence...
 - `cd ~/qt-build`
 - `mkdir qt-static`
 - `cd qt-static`
