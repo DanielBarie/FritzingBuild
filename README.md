@@ -181,7 +181,54 @@ Install libgit2-dev and libgit2:
 - Indicator of success: watch for ```[100%] Linking CXX static library libpolyclipping.a```
 - library file `libpolyclipping.a` will be in `~/Clipper1/cpp/build-dir`
 
+## Satisfy svgpp Requirement
+If you don't mind the Megabytes, just do a quick
+```
+sudo apt-get install libsvgpp-dev
+```
+Else see below for build instructions.
 
+## Prepare Fritzing build
+- ```git clone https://github.com/fritzing/fritzing-app.git```
+	- optional: ```git clone https://github.com/fritzing/fritzing-parts```
+	- change compile script (phoenix.pro):
+		- allow for later versions of qt
+   	- ```nano ./fritzing-app/phoenix.pro```
+   	- change QT_MOST to 6.6.10 (or whatever is sufficiently high)
+- change boost detect script (will only accept up to 81)
+    - ```nano ./fritzing-app/pri/boostdetect.pri```
+   	- find `BOOSTS = 81`
+   	- change to `BOOSTS = 84`
+- fix ngspice detection (will not set correct include dir)
+   	- include must point to `../ngspice-42/src/include`but instead points to `ngspice-40/include`
+   	- `nano ./pri/spicedetect.pri`
+   	- find `NGSPICEPATH = ../../ngspice-40`, change to `NGSPICEPATH = ../../ngspice-42`
+   	- find `INCLUDEPATH += $$NGSPICEPATH/include`, change to `INCLUDEPATH += $$NGSPICEPATH/src/include`
+   	- add (e.g. below NGSPICEPATH directive): ```LIBS += -L$$absolute_path($${NGSPICEPATH}/releasesh/src/.libs) -lngspice``` 
+- fix clipper detect script:
+   	- `nano ./pri/clipper1detect.pri`
+   	- change ```CLIPPER1 = $$absolute_path($$PWD/../../Clipper1/6.4.2)``` to be ``` CLIPPER1 = $$absolute_path($$PWD/../../Clipper1)``` (no slash!)
+   	- change `LIBS += -L$$absolute_path($${CLIPPER1}/lib) -lpolyclipping` to be ```LIBS += -L$$absolute_path($${CLIPPER1}/cpp/build-dir) -lpolyclipping``` 
+   	- change ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/include/polyclipping)``` to be ```INCLUDEPATH += $$absolute_path($${CLIPPER1}/cpp)```
+- fix quazip detect script:
+   	- `nano pri/quazipdetect.pri`
+   	- change ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH/include/QuaZip-Qt6-$$QUAZIP_VERSION```to be ```QUAZIP_INCLUDE_PATH=$$QUAZIP_PATH```
+   	- change `QUAZIP_LIB_PATH=$$QUAZIP_PATH/lib` to be `QUAZIP_LIB_PATH=$$QUAZIP_PATH`
+   	- change ```LIBS += -L $$QUAZIP_LIB_PATH -lquazip1-qt$$QT_MAJOR_VERSION``` to be ```LIBS += -L $$QUAZIP_LIB_PATH/build-dir/quazip -lquazip1-qt$$QT_MAJOR_VERSION```
+- fix libgit detect script:
+	- `nano pri/libgit2detect.pri`
+ 	- comment out conditional for including static lib, just set `LIBGITSTATIC = true`
+ 	- change `LIBGIT2LIB = $$LIBGITPATH/lib` to be `LIBGIT2LIB = $$LIBGITPATH/build`
+- edit project file for platform plugin inclusion:
+	- `nano phoenix.pro`
+ 	- in unix!macx section, below `LIBS += -lz` add new line `QTPLUGIN.platforms = qminimal qxcb qoffscreen qwayland qvnc`
+  	- see: https://doc.qt.io/qt-6/qpa.html
+- Test build
+  - `qmake`
+  - `make`
+- Everything ok? proceed... if not: fix
+  - `make clean`
+  - `rm Makefile*`
 
 # These are some random notes on dynamic and static builds of various things (dependencies and Fritzing)
 Below steps are different for shared libs / dynamic linking and static linkin.
@@ -360,7 +407,7 @@ Please note that he library gets linked statically (well, no, we're telling the 
 for dynamic linking, see other instructions
 
 ## Install svgpp
-`sudo apt-get install dvgpp-dev`
+`sudo apt-get install libsvgpp-dev`
 
 ## Prepare Fritzing build
 - ```git clone https://github.com/fritzing/fritzing-app.git```
