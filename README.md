@@ -105,7 +105,8 @@ Caveat: Ubuntu 22.04 is at node.js 12.22.9 so too low for qt to build some compo
  	- ```tar xzvf boost_1_84_0.tar.gz```
 
 # Build Dependencies and Fritzing
-This will be multiple steps involving download of various dependencies, unpacking, and building these. For your orientation, there's a diagram of the resulting directory structure in a [separate section](#directory-structure-of-build).
+This will be multiple steps involving download of various dependencies, unpacking, editing, and building these. For your orientation, there's a diagram of the resulting directory structure in a [separate section](#directory-structure-of-build). 
+For version 1.0.2b of the Fritzing repo, there's a [tarball](dbfiles.tar) in this repo that will produce the required edited project file (`phoenix.pro`) and `.pri` files. Untar it after unpacking the components and save yourself the manual edits.
 
 ## Do Qt build
 - `sudo apt-get install libwayland-dev  libwayland-egl1-mesa libwayland-server0 libgles2-mesa-dev libxkbcommon-dev`
