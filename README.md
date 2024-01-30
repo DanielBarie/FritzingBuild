@@ -320,6 +320,7 @@ ldd Fritzing
 
 
 ## Directory structure of build:
+Up to level two of the directory structure, goes on, but for the sake of brevity not included.
 ```
 .
 ├── boost_1_84_0
