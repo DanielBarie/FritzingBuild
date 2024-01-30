@@ -1142,6 +1142,19 @@ For Ubuntu 20.04 (focal) LTS in WSL2:
 sudo apt-get install libgit2-1.1 libxrender1 libxcb-render-util0 libxcb-shape0 libxcb-randr0 libxcb-xfixes0 libxcb-xkb1 libxcb-sync1 libxcb-shm0  libxcb-icccm4 libxcb-keysyms1-dev libxcb-image0  libxcb-util1 libxcb-cursor0 libxkbcommon-tools libxkbcommon-x11-0 libxkbcommon0 libfontconfig libfreetype6 libxext6 libx11-6 libxcb1 libx11-xcb1 libsm6 libice6 libglib2.0-0 libglib2.0-bin libegl1 libopengl0 libgomp1
 ```
 
+## Nice, but I'm missing a specific part..
+You might have to get the development branch of the parts repo. This is (as of Jan 2024) the case e.g. for the instruments (volt meter,...)
+![Part bin measurement](https://github.com/DanielBarie/FritzingBuild/assets/73287620/9365a383-3334-4002-b0d5-0c067276e2af)  
+Go do:
+
+- close Fritzing
+- ```cd <whatever your fritzing installation directory is>```
+- ```rm -rf fritzing-parts```
+- ```git clone https://github.com/fritzing/fritzing-parts.git``` (default branch is set to develop in repository, no need to change)
+- re-start Fritzing
+- Fritzing will take quite a while for loading because the parts database is being rebuilt
+- You now have a fair chance of seeing new parts...
+
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
 https://gist.github.com/gubatron/32f82053596c24b6bec6?permalink_comment_id=2575013
