@@ -1115,6 +1115,8 @@ I don't really feel like patching the source since this will just end up being m
 ## Can I run this in WSL?
 Sure, but you need the WSL GUI and you need to install the dependencies. The dependencies might be a bit tricky, because older versions don't supply the required versions of libgit. That's the price we pay for not building libgit and including it in our release. So I'd recommend having a distro and version that supplies libgit 1.1 (e.g. min. Ubuntu 22.04 or corresponding Debian).
 
+There's one catch, though: Once you've lost the window, there's no getting it back... It might sometimes just not show up in the window list, anymore. Save early, save often.
+
 ![WSL Command Line with Fritzing](https://github.com/DanielBarie/FritzingBuild/assets/73287620/5b4e3c97-04cd-47a5-a51f-9e48dfd0743d)
 ![Windows Desktop with Fritzing from WSL](https://github.com/DanielBarie/FritzingBuild/assets/73287620/f994884a-8a33-493a-b281-d4a7189e8180)
 
