@@ -57,7 +57,7 @@ Static:
 - Quazip
 
 Dynamic:
-- SpiceNG
+- SpiceNG (will be supplied with the application archive)
 - git2 (from distro)
 - svgpp (which isn't a library in the original sense) (from distro)
 
@@ -1110,6 +1110,34 @@ We now have two options:
 - go for dynamic linking with the source as is.
 
 I don't really feel like patching the source since this will just end up being more work each time a new version of Fritzing is released. And most distros actually ship a version of `libngspice.so` (Ubuntu 22.04 is at v36). Well, go dynamic.
+
+## Can I run this in WSL?
+Sure, but you need the WSL GUI and you need to install the dependencies. The dependencies might be a bit tricky, because older versions don't supply the required versions of libgit. That's the price we pay for not building libgit and including it in our release. So I'd recommend having a distro and version that supplies libgit 1.1 (e.g. min. Ubuntu 22.04 or corresponding Debian).
+
+![WSL Command Line with Fritzing](https://github.com/DanielBarie/FritzingBuild/assets/73287620/5b4e3c97-04cd-47a5-a51f-9e48dfd0743d)
+![Windows Desktop with Fritzing from WSL](https://github.com/DanielBarie/FritzingBuild/assets/73287620/f994884a-8a33-493a-b281-d4a7189e8180)
+
+
+Check with:
+From Windows Command Line:
+```
+wsl --status
+Standard-Distribution: Ubuntu
+Standardversion: 2
+```
+From inside WSL:
+```
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 22.04.3 LTS
+Release:        22.04
+Codename:       jammy
+For Ubuntu 20.04 (focal) LTS in WSL2:
+```
+```
+sudo apt-get install libgit2-1.1 libxrender1 libxcb-render-util0 libxcb-shape0 libxcb-randr0 libxcb-xfixes0 libxcb-xkb1 libxcb-sync1 libxcb-shm0  libxcb-icccm4 libxcb-keysyms1-dev libxcb-image0  libxcb-util1 libxcb-cursor0 libxkbcommon-tools libxkbcommon-x11-0 libxkbcommon0 libfontconfig libfreetype6 libxext6 libx11-6 libxcb1 libx11-xcb1 libsm6 libice6 libglib2.0-0 libglib2.0-bin libegl1 libopengl0
+```
 
 # Additional Reading:
 Things to remember when compiling/linking C/C++ software  
