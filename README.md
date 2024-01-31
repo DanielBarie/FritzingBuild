@@ -63,14 +63,17 @@ Dynamic:
 
 # To Do
 - re-structure (static and dynamic build steps)
-- create script for patching pri files
+- create script for patching pri files and/or modify build steps to do shadow builds into directories expected by pri files
 - maybe create a snap or flatpack?
 
 # Alternatives?
 ## Build System
-I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken (see above). But with 22.04 LTS,  Qt is at 6.2.4. Fritzing 1.0.2 depends on Qt > 6.5.2. Don't choose Ubuntu 23.10 because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu``` When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on). But this also uses Qt 6.4.2. 
+I went for Ubuntu because of the LTS release and because I wrongly assumed having an easier build process. Boy, was I mistaken (see above). 
 
-So having the correct version of Qt is the main issue if you want to skip building Qt yourself. You can, of course get pre-built binaries of any Qt version from the Qt site if you have/create an account.
+With Ubuntu 22.04 LTS,  Qt is at 6.2.4. Fritzing 1.0.2 depends on Qt > 6.5.2. Ubuntu 23.10 isn't suitable because, guess what, it's running ```Using Qt version 6.4.2 in /usr/lib/x86_64-linux-gnu```.  
+When focusing on LTS, we might as well take Debian Bookworm (five years from mid 2023 on). But this also uses Qt 6.4.2. 
+
+So having the correct version of Qt is the main issue if you want to skip building Qt yourself. You can, of course, get pre-built binaries of any Qt version from the Qt site if you have/create an account. But these (afaik) don't include static versions.
 
 ## Purely Dynamic Linking
 Sure, possible. Be prepared to copy all Qt dependencies and required libraries (git2, Quazip, Clipping).
