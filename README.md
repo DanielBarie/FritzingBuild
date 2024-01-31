@@ -244,8 +244,8 @@ You're now ready for calling the release script.
 # Building Release
 We've taken some DIY shortcuts: 
 - We're set on doing a development release
-- But with the master branch parts repo
-- Please be aware that the script will normally work without a GUI except if parts from the fritzing-parts repo have errors in their definitions.
+- But with the master branch parts repo (which isn't the best idea in every case, ses [FAQ section](https://github.com/DanielBarie/FritzingBuild/tree/main#nice-but-im-missing-a-specific-part))
+- Please be aware that the script will normally work without a GUI except if parts from the fritzing-parts repo have errors in their definitions (see [FAQ section](https://github.com/DanielBarie/FritzingBuild/tree/main#release-build-works-but-stops-at-building-database-no-output))
   
 ## Now, go do it:
 - `cd ~/fritzing-app/tools/linux_release_script`
