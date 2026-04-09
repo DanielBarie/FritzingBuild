@@ -1213,6 +1213,6 @@ https://stackoverflow.com/questions/26103966/how-can-i-statically-link-standard-
 
 ## Hangs while executing release script
 There is a bug in `/src/model/palettemodel.cpp` where a dialog will be displayed when a parse error is encountered. The dialog is created with a null parent. So is not attached to a visible/top-level application window in a reliable way. The app then waits in exec() for a dialog that is hidden, behind something else, or otherwise not being surfaced properly.
-Fix it with 
-```perl -0pi -e 's{FMessageBox::information\(nullptr, QObject::tr\("Fritzing"\),\s*QObject::tr\("Parse error \(2\) at line %1, column %2:\\n%3\\n%4"\)\s*\.arg\(errorLine\)\s*\.arg\(errorColumn\)\s*\.arg\(errorStr\)\s*\.arg\(path\)\);\s*return nullptr;}{qWarning() << "Parse error (2) at line" << errorLine << ", column" << errorColumn << ":" << errorStr << path;\n\t\treturn nullptr;}gs' src/model/palettemodel.cpp``` 
+Fix it with   
+```perl -0pi -e 's{FMessageBox::information\(nullptr, QObject::tr\("Fritzing"\),\s*QObject::tr\("Parse error \(2\) at line %1, column %2:\\n%3\\n%4"\)\s*\.arg\(errorLine\)\s*\.arg\(errorColumn\)\s*\.arg\(errorStr\)\s*\.arg\(path\)\);\s*return nullptr;}{qWarning() << "Parse error (2) at line" << errorLine << ", column" << errorColumn << ":" << errorStr << path;\n\t\treturn nullptr;}gs' src/model/palettemodel.cpp```   
 This will remove the message box and just output to stderr.
