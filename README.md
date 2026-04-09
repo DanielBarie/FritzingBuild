@@ -263,6 +263,19 @@ Skip Web Component, doesn't like static build:
   ```
 - ```sudo apt-get install libgit2-dev libgit2-1.7```
 
+## Fixes for building with Qt 6.11.0
+This is for `0.9.6-2489-g04e5bb02`
+```
+perl -0pi -e 's/\.arg\(m_orientation\);/.arg(m_orientation.toInt());/g' src/commands.cpp
+perl -0pi -e 's/\.arg\(m_itemID\)\.arg\(m_degrees\)\.arg\(m_orientation\);/.arg(m_itemID).arg(m_degrees).arg(m_orientation.toInt());/g' src/commands.cpp
+perl -0pi -e 's/\.arg\(this->wireFlags\(\)\)/.arg(this->wireFlags().toInt())/g' src/items/itembase.cpp
+perl -0pi -e 's/\.arg\(wireFlags\)/.arg(wireFlags.toInt())/g' src/sketch/sketchwidget.cpp
+perl -0pi -e 's/const QString TextUtils::PowerPrefixesString = QString\("pnmkMGTu\\\\x%1"\)\.arg\(MicroSymbolCode, 4, 16, QChar\('\''0'\''\)\);/const QString TextUtils::PowerPrefixesString =\n    QString("pnmkMGTu\\\\x%1").arg(static_cast<unsigned int>(MicroSymbolCode), 4, 16, QChar('\''0'\''));/g' src/utils/textutils.cpp
+perl -0pi -e 's/QString\("(\(\(\\\\d\{1,10\}\)\|\(\\\\d\{1,10\}\\\\\.\)\|\(\\\\d\{1,10\}\\\\\.\\\\d\{1,5\}\)\)\[\\\\x%1umkMG\]\{0,1\}\[\\\\x03A9\]\{0,1\})"\)\.arg\(TextUtils::MicroSymbolCode, 4, 16, QChar\('\''0'\''\)\)/QString("((\\\\d{1,10})|(\\\\d{1,10}\\\\.)|(\\\\d{1,10}\\\\.\\\\d{1,5}))[\\\\x%1umkMG]{0,1}[\\\\x03A9]{0,1}")\n                            .arg(static_cast<unsigned int>(TextUtils::MicroSymbolCode), 4, 16, QChar('\''0'\''))/g' src/items/resistor.cpp
+perl -0pi -e 's/QString\(QChar\(m_viewLayerPlacement\)\)/QString(QChar(static_cast<unsigned int>(m_viewLayerPlacement)))/g' src/items/paletteitembase.cpp
+perl -0pi -e 's/QString\("&#x%1;"\)\.arg\(c\.unicode\(\), 0, 16\)/QString("&#x%1;").arg(static_cast<unsigned int>(c.unicode()), 0, 16)/g' src/utils/textutils.cpp
+```
+
 # Building Release
 We've taken some DIY shortcuts: 
 - We're set on doing a development release
@@ -1198,4 +1211,8 @@ https://gist.github.com/gubatron/32f82053596c24b6bec6?permalink_comment_id=25750
 And Pros and Cons of static and dynamic linking:  
 https://stackoverflow.com/questions/26103966/how-can-i-statically-link-standard-library-to-my-c-program
 
-
+## Hangs while executing release script
+There is a bug in `/src/model/palettemodel.cpp` where a dialog will be displayed when a parse error is encountered. The dialog is created with a null parent. So is not attached to a visible/top-level application window in a reliable way. The app then waits in exec() for a dialog that is hidden, behind something else, or otherwise not being surfaced properly.
+Fix it with 
+```perl -0pi -e 's{FMessageBox::information\(nullptr, QObject::tr\("Fritzing"\),\s*QObject::tr\("Parse error \(2\) at line %1, column %2:\\n%3\\n%4"\)\s*\.arg\(errorLine\)\s*\.arg\(errorColumn\)\s*\.arg\(errorStr\)\s*\.arg\(path\)\);\s*return nullptr;}{qWarning() << "Parse error (2) at line" << errorLine << ", column" << errorColumn << ":" << errorStr << path;\n\t\treturn nullptr;}gs' src/model/palettemodel.cpp``` 
+This will remove the message box and just output to stderr.
