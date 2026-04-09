@@ -242,6 +242,25 @@ Else see below for build instructions.
 
 You're now ready for calling the release script.
 
+# Steps for Ubuntu 24.04 Build Environment
+Prepare as per 22.04.
+
+## Modified Qt Build:
+Skip Web Component, doesn't like static build:
+- ```
+  rm -rf ~/qt-build/qt-static-min
+  mkdir -p ~/qt-build/qt-static-min
+  cd ~/qt-build/qt-static-min
+
+	../qt-everywhere-src-6.11.0/configure \
+	  -static \
+	  -qt-zlib \
+	  -prefix /opt/Qt6.11.0 \
+	  -submodules qtbase,qtdeclarative,qtshadertools,qttools,qtsvg,qtimageformats,qt5compat \
+	  -nomake examples \
+	  -nomake tests
+  ```
+
 # Building Release
 We've taken some DIY shortcuts: 
 - We're set on doing a development release
