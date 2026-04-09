@@ -165,6 +165,7 @@ Install libgit2-dev and libgit2:
   		option(QUAZIP_USE_QT_ZLIB "" OFF)
    	```
 - `mkdir build-dir`
+- `cd build-dir`
 - cmake needs to be called with path to qt6 files: `cmake .. -D QUAZIP_QT_MAJOR_VERSION=6 -D CMAKE_PREFIX_PATH="/opt/Qt6.6.1/lib/cmake"`
 - `cmake --build ./ --parallel`
 - resulting library `libquazip1-qt6.a` will be in `~/quazip-1.4/build-dir/quazip`
