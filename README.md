@@ -257,7 +257,7 @@ Skip Web Component, doesn't like static build:
 	  -static \
 	  -qt-zlib \
 	  -prefix /opt/Qt6.11.0 \
-	  -submodules qtbase,qtdeclarative,qtshadertools,qttools,qtsvg,qtimageformats,qt5compat \
+	  -submodules qtbase,qtdeclarative,qtshadertools,qttools,qtsvg,qtimageformats,qt5compat,qtserialport \
 	  -nomake examples \
 	  -nomake tests
   ```
