@@ -260,6 +260,7 @@ Skip Web Component, doesn't like static build:
 	  -nomake examples \
 	  -nomake tests
   ```
+- ```sudo apt-get install libgit2-dev libgit2-1.1```
 
 # Building Release
 We've taken some DIY shortcuts: 
