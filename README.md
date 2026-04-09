@@ -149,7 +149,7 @@ Install libgit2-dev and libgit2:
 - untar
 - Skip with modified `pri/quazipdetect.pri`: rename to expected dir name e.g. `mv quazip-1.4 quazip-6.6.1-1.4`, made of Qt version number and expected version of quazip (1.4)
 - `cd quazip-1.4`
-- `nano CMakelists.txt`
+- `nano CMakeLists.txt`
 	- change
   	```
     	else()
