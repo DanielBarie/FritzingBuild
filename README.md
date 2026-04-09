@@ -1146,7 +1146,9 @@ sudo apt-get install libgit2-1.1 libxrender1 libxcb-render-util0 libxcb-shape0 l
 ```
 
 For 24.04:
+```
 sudo apt-get install libgit2-1.7 libxrender1 libxcb-render-util0 libxcb-shape0 libxcb-randr0 libxcb-xfixes0 libxcb-xkb1 libxcb-sync1 libxcb-shm0  libxcb-icccm4 libxcb-keysyms1-dev libxcb-image0  libxcb-util1 libxcb-cursor0 libxkbcommon-tools libxkbcommon-x11-0 libxkbcommon0 libfontconfig libfreetype6 libxext6 libx11-6 libxcb1 libx11-xcb1 libsm6 libice6 libglib2.0-0 libglib2.0-bin libegl1 libopengl0 libgomp1
+```
 
 ## Nice, but I'm missing a specific part..
 You might have to get the development branch of the parts repo. This is (as of Jan 2024) the case e.g. for the instruments (volt meter,...)
