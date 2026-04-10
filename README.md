@@ -1216,3 +1216,54 @@ There is a bug in `/src/model/palettemodel.cpp` where a dialog will be displayed
 Fix it with   
 ```perl -0pi -e 's{FMessageBox::information\(nullptr, QObject::tr\("Fritzing"\),\s*QObject::tr\("Parse error \(2\) at line %1, column %2:\\n%3\\n%4"\)\s*\.arg\(errorLine\)\s*\.arg\(errorColumn\)\s*\.arg\(errorStr\)\s*\.arg\(path\)\);\s*return nullptr;}{qWarning() << "Parse error (2) at line" << errorLine << ", column" << errorColumn << ":" << errorStr << path;\n\t\treturn nullptr;}gs' src/model/palettemodel.cpp```   
 This will remove the message box and just output to stderr.
+
+## Can't save files in develop build?
+Development versions write an extensive action log at `$XDG_DATA_HOME/<OrganizationName>/<ApplicationName>`. Fritzing sets:
+- Organization: `Fritzing`
+- Application: `Fritzing`
+In `src/debugdialog.cpp`:
+```
+m_file.setFileName(path);
+```
+That means path is used as a file path, not a directory.  So the file itself is literally named: `Fritzing` inside `~/.local/share/Fritzing/`. Right now the code is treating a directory path as a filename.  
+Now, when saving, a temp save will be written to `~/.local/share/Fritzing/Fritzing` trying to treat the last `Fritzing` as part of a folder location. Which, of course, will fail when there already is a file named `Fritzing` below `~/.local/share/Fritzing`.  
+Patch it with 
+- Add required Qt headers  
+Adds QDir, QCoreApplication, and QFileInfo includes to src/debugdialog.cpp so the new logging code can create directories, react to app shutdown, and inspect file paths.
+```
+perl -0pi -e 's/#include "qevent\.h"/#include "qevent.h"\n#include <QDir>\n#include <QCoreApplication>\n#include <QFileInfo>/s' src/debugdialog.cpp
+```
+- Close the log file on application shutdown  
+Extends the DebugDialog constructor to connect to QCoreApplication::aboutToQuit, so the static log file handle is closed cleanly when Fritzing exits.
+```
+perl -0pi -e 's@DebugDialog::DebugDialog\(QWidget \*parent\) : QDialog\(parent\) \{@DebugDialog::DebugDialog(QWidget *parent) : QDialog(parent) {\n\tQObject::connect(qApp, \&QCoreApplication::aboutToQuit, []() {\n\t\tif (DebugDialog::m_file.isOpen()) {\n\t\t\tDebugDialog::m_file.close();\n\t\t}\n\t});@s' src/debugdialog.cpp
+```
+- Avoid double timestamps in debug_ts()
+Changes DebugDialog::debug_ts(...) to forward the raw message to DebugDialog::debug(...) without prepending its own timestamp, because timestamping is now handled centrally in debug(...).
+```
+perl -0pi -e 's@void DebugDialog::debug_ts\(QString message, DebugLevel debugLevel, QObject \* ancestor\) \{\s*DebugDialog::debug\(QString\("\[%1\] %2"\)\.arg\(QTime::currentTime\(\)\.toString\("HH:mm:ss\.zzz"\), message\), debugLevel, ancestor\);\s*\}@void DebugDialog::debug_ts(QString message, DebugLevel debugLevel, QObject * ancestor) {\n\tDebugDialog::debug(message, debugLevel, ancestor);\n}@s' src/debugdialog.cpp
+```
+- Use a proper logfile, keep it open, and timestamp every message
+  Replaces the old logic that used AppDataLocation directly as a filename and reopened/closed the file for every message.
+  The new code:	
+	- prepends a full timestamp to each log message,
+	- creates the log directory if needed,
+	- uses fritzing.log as the logfile name,
+	- opens the file once on first use,
+	- keeps it open,
+	- flushes after each write,
+	- and reports an error with qWarning() if the file cannot be opened.
+```
+perl -0pi -e 's@if \(m_file\.fileName\(\)\.isEmpty\(\)\) \{\s*QString path = QStandardPaths::writableLocation\(QStandardPaths::AppDataLocation\);\s*// path \+= "/debug\.txt";\s*m_file\.setFileName\(path\);\s*\}\s*if \(m_file\.open\(QIODevice::Append \| QIODevice::Text\)\) \{\s*QTextStream out\(&m_file\);\s*out << message << "\\n";\s*m_file\.close\(\);\s*\}@QString loggedMessage = QString("[%1] %2").arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss.zzz"), message);\n\tif (m_file.fileName().isEmpty()) {\n\t\tQString dirPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);\n\t\tQDir().mkpath(dirPath);\n\t\tm_file.setFileName(dirPath + QDir::separator() + "fritzing.log");\n\t}\n\tif (!m_file.isOpen()) {\n\t\tif (!m_file.open(QIODevice::Append | QIODevice::Text)) {\n\t\t\tqWarning() << "Could not open debug log file" << m_file.fileName() << ":" << m_file.errorString();\n\t\t}\n\t}\n\tif (m_file.isOpen()) {\n\t\tQTextStream out(&m_file);\n\t\tout << loggedMessage << "\\n";\n\t\tout.flush();\n\t}\n\tmessage = loggedMessage;@s' src/debugdialog.cpp
+```
+- Make setLogFilename() compatible with persistent logging:
+  Updates the custom-logfile handling so that when a filename is explicitly provided:
+	- any already-open logfile is closed first,
+	-  the target directory is created if needed,
+	- the file is reset,
+	- a startup header with timestamp is written,
+	- the file remains open for later appends,
+	-  and failures to open the file are reported with qWarning().
+```
+perl -0pi -e 's@if \(!filename\.isEmpty\(\)\) \{\s*m_file\.setFileName\(filename\);\s*// Clear the file and write the header\s*m_file\.remove\(\);\s*m_file\.open\(QIODevice::WriteOnly \| QIODevice::Text\);\s*QTextStream out\(&m_file\);\s*out << "Fritzing debug log started at " << QDateTime::currentDateTime\(\)\.toString\(\) << "\\n";\s*m_file\.close\(\);\s*qDebug\(\) << "Debug output redirected to" << filename;\s*\}@if (!filename.isEmpty()) {\n\t\tif (m_file.isOpen()) {\n\t\t\tm_file.close();\n\t\t}\n\t\tQFileInfo fi(filename);\n\t\tif (!fi.path().isEmpty()) {\n\t\t\tQDir().mkpath(fi.path());\n\t\t}\n\t\tm_file.setFileName(filename);\n\t\tm_file.remove();\n\t\tif (m_file.open(QIODevice::WriteOnly | QIODevice::Text)) {\n\t\t\tQTextStream out(&m_file);\n\t\t\tout << "Fritzing debug log started at " << QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss.zzz") << "\\n";\n\t\t\tout.flush();\n\t\t}\n\t\telse {\n\t\t\tqWarning() << "Could not open debug log file" << filename << ":" << m_file.errorString();\n\t\t}\n\t\tqDebug() << "Debug output redirected to" << filename;\n\t}@s' src/debugdialog.cpp
+```
