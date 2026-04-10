@@ -1,3 +1,12 @@
+# Caution: Rant ahead.
+Fritzing is a frustrating case of unrealized potential. It’s a tool that should be indispensable in classrooms and hobby labs, yet it’s weighed down by long-standing bugs, inconsistent behavior, and a development pace that feels almost stalled. Basic issues linger for years, and workflows that should be smooth still feel brittle and unpredictable. For something so widely recommended to beginners, that’s a serious problem.
+
+And sure: one can take a principled stance against AI-generated code. That’s a valid discussion. But rejecting it outright, even when the code is tested, verified, and demonstrably works, feels more ideological than practical. If quality assurance is in place, the origin of the code shouldn’t matter nearly as much as whether it solves problems reliably.
+
+What’s harder to justify is the communication gap. It’s understandable to ask for funding to sustain development. But then not responding to straightforward inquiries, like classroom licensing requests, undermines that argument. Educational institutions are literally offering a pathway to stable support, and silence in response sends the wrong message. That was low-hanging fruit—an easy win for both funding and adoption. And it was outright being ignored.
+
+At the moment, it feels less like a project constrained by resources and more like one constrained by priorities.
+
 # FritzingBuild
 Building Fritzing with and for Ubuntu 22.04 LTS on AMD64.
 
